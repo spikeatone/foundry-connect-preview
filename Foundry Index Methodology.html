@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foundry Index — Methodology</title>
+<meta name="description" content="How the Foundry Index ranks technical schools and programs: every pillar, every weight, every source with its vintage, and the honest-data rules.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Sofia+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ---- Theme tokens (light default; dark via prefers-color-scheme) ---- */
+  :root {
+    --bg-top: #FBF5EC;
+    --bg-bottom: #F3E7D6;
+    --ink: #241a10;
+    --ink-soft: #6a5c49;
+    --card: #ffffff;
+    --card-border: rgba(60, 44, 24, 0.12);
+    --ember: #F47F21;
+    --ember-deep: #E06E12;
+    --rule: rgba(60, 44, 24, 0.14);
+    --chip: rgba(244, 127, 33, 0.10);
+    --bar-track: rgba(60, 44, 24, 0.10);
+    --warn-bg: rgba(244, 127, 33, 0.10);
+    --warn-border: rgba(244, 127, 33, 0.35);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-top: #1a1206;
+      --bg-bottom: #0f0b05;
+      --ink: #f3ead9;
+      --ink-soft: #b6a790;
+      --card: #221a0f;
+      --card-border: rgba(255, 236, 200, 0.12);
+      --ember: #FB9440;
+      --ember-deep: #F47F21;
+      --rule: rgba(255, 236, 200, 0.14);
+      --chip: rgba(251, 148, 64, 0.14);
+      --bar-track: rgba(255, 236, 200, 0.10);
+      --warn-bg: rgba(251, 148, 64, 0.10);
+      --warn-border: rgba(251, 148, 64, 0.34);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%) fixed;
+    color: var(--ink);
+    font-family: 'Sofia Sans', system-ui, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 40px 22px 80px; }
+
+  /* ---- Masthead ---- */
+  .masthead { margin-bottom: 8px; }
+  .kicker {
+    font-weight: 800; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ember); margin: 0 0 10px;
+  }
+  h1 {
+    font-family: 'Literata', Georgia, serif; font-weight: 600;
+    font-size: clamp(30px, 6vw, 44px); line-height: 1.08; margin: 0 0 14px; letter-spacing: -0.01em;
+  }
+  .lede { font-size: clamp(16px, 2.4vw, 19px); color: var(--ink-soft); margin: 0 0 8px; max-width: 60ch; }
+
+  h2 {
+    font-family: 'Literata', Georgia, serif; font-weight: 600;
+    font-size: clamp(21px, 3.4vw, 26px); line-height: 1.15; margin: 44px 0 12px; letter-spacing: -0.01em;
+  }
+  h3 { font-size: 17px; font-weight: 700; margin: 22px 0 6px; }
+  p { margin: 0 0 12px; max-width: 64ch; }
+  a { color: var(--ember-deep); }
+  strong { font-weight: 700; }
+
+  .rule { height: 1px; background: var(--rule); border: 0; margin: 30px 0; }
+
+  /* ---- Pillar cards ---- */
+  .pillars { display: grid; gap: 12px; margin: 18px 0 6px; }
+  .pillar {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .pillar-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .pillar-name { font-weight: 800; font-size: 16px; }
+  .pillar-weight {
+    font-weight: 800; font-size: 13px; color: var(--ember-deep);
+    background: var(--chip); border-radius: 999px; padding: 3px 10px; white-space: nowrap;
+  }
+  .pillar-metrics { color: var(--ink); font-size: 14.5px; margin: 8px 0 4px; }
+  .pillar-source { color: var(--ink-soft); font-size: 13px; }
+
+  /* ---- Live weight explorer ---- */
+  .explorer {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 16px;
+    padding: 18px 18px 20px; margin: 16px 0;
+  }
+  .explorer label { display: block; font-weight: 700; font-size: 13px; margin: 0 0 8px; color: var(--ink-soft); }
+  select {
+    width: 100%; font-family: inherit; font-size: 15px; font-weight: 600; color: var(--ink);
+    background: var(--bg-top); border: 1px solid var(--card-border); border-radius: 10px;
+    padding: 11px 12px; -webkit-appearance: none; appearance: none;
+  }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 14px 0 4px; font-size: 13px; color: var(--ink-soft); }
+  .meta-row b { color: var(--ink); font-weight: 700; }
+  .weights { margin-top: 14px; display: grid; gap: 10px; }
+  .wbar-row { display: grid; grid-template-columns: 128px 1fr 48px; align-items: center; gap: 10px; }
+  .wbar-label { font-size: 13.5px; font-weight: 600; }
+  .wbar-track { background: var(--bar-track); border-radius: 999px; height: 9px; overflow: hidden; }
+  .wbar-fill { background: var(--ember); height: 100%; border-radius: 999px; width: 0; transition: width .4s ease; }
+  .wbar-pct { font-size: 13px; font-weight: 700; text-align: right; color: var(--ink); }
+  .explorer-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 14px; }
+  .explorer-err { color: var(--ember-deep); font-size: 13.5px; font-weight: 600; margin-top: 12px; }
+
+  /* ---- Rule list ---- */
+  ul.rules { list-style: none; padding: 0; margin: 8px 0 4px; display: grid; gap: 10px; }
+  ul.rules li { padding-left: 22px; position: relative; font-size: 15px; max-width: 64ch; }
+  ul.rules li::before {
+    content: ""; position: absolute; left: 2px; top: 8px; width: 8px; height: 8px;
+    border-radius: 2px; background: var(--ember);
+  }
+
+  /* ---- Callout ---- */
+  .callout {
+    background: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 12px;
+    padding: 14px 16px; margin: 16px 0; font-size: 14.5px;
+  }
+  .callout b { font-weight: 800; }
+
+  /* ---- Sources table ---- */
+  .src { display: grid; gap: 10px; margin: 12px 0; }
+  .src-item {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 13px 15px;
+  }
+  .src-name { font-weight: 800; font-size: 15px; }
+  .src-what { font-size: 14px; color: var(--ink); margin: 3px 0; }
+  .src-vintage { font-size: 12.5px; color: var(--ink-soft); }
+
+  footer { margin-top: 46px; padding-top: 22px; border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 13px; }
+  .disclaimer { font-size: 13px; color: var(--ink-soft); max-width: 64ch; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">The Foundry Index</p>
+    <h1>How we rank — and what we won't fake</h1>
+    <p class="lede">The Foundry Index is <strong>our point of view</strong> on where a teenager can train for a skilled career and get an honest return. It is not a government or accreditor standard. This page shows exactly how a rank is built, from which data, so you can judge it for yourself.</p>
+  </header>
+
+  <hr class="rule">
+
+  <section>
+    <h2>The five pillars</h2>
+    <p>Every school or program is scored <strong>0–100</strong> — the Foundry Score. Each metric is normalized <em>within a peer group</em> (a welding program is compared to welding programs, not to a nursing school or a university), then combined using published, per-list weights. A rank is just the order of those scores <em>within one published list</em>.</p>
+    <div class="pillars" id="pillars"></div>
+    <p class="explorer-note" style="margin-top:14px">Weights differ by list — an earnings-focused list leans harder on Pillar 1. The exact profile for every published list is shown live below.</p>
+  </section>
+
+  <section>
+    <h2>Weights, per published list</h2>
+    <p>Weights are a product decision, revisited each annual edition — not a black box. Pick any published list to see its live weight profile, scope, and counts, pulled directly from the Index API.</p>
+    <div class="explorer">
+      <label for="listPick">Published list</label>
+      <select id="listPick"><option>Loading published lists…</option></select>
+      <div class="meta-row" id="listMeta"></div>
+      <div class="weights" id="weights"></div>
+      <div class="explorer-err" id="explorerErr" style="display:none"></div>
+      <p class="explorer-note">Live from <code>/v1/index</code>. Pillar 5 (Student Experience) reads 0% at launch — see the roadmap below.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The honest-data rules</h2>
+    <p>This is where we diverge from rankings that silently drop or backfill missing data.</p>
+    <ul class="rules">
+      <li><strong>Missing outcomes become "Emerging," never a fake rank.</strong> Federal data suppresses any figure covering fewer than 30 students. Small certificate programs — often exactly our audience's programs — may have no published earnings. Those schools are listed and profiled with an <strong>"Emerging / Insufficient Outcome Data"</strong> badge in a separate tier, never interpolated above measured programs.</li>
+      <li><strong>We never backfill a program's earnings with whole-school numbers</strong> and present it as the program's result. If we only have institution-level data, we say so.</li>
+      <li><strong>Earnings are shown as ranges.</strong> A single point estimate implies a precision the data doesn't have.</li>
+      <li><strong>Small samples are disclosed, not penalized.</strong> A 22-graduate program isn't pushed down the rank for its size; it carries a confidence note.</li>
+      <li><strong>Data vintage is always shown.</strong> "Earnings reflect the 2023–24 cohort" — outcomes are historical, not a promise.</li>
+    </ul>
+    <p>When a pillar's metric is unavailable for a school, the score is computed on the <strong>available pillars, re-normalized to 100%</strong>, and the profile lists exactly which pillars were and weren't measured. A school is ranked in the main tier only if it has outcome data (Pillar 1 or 2); otherwise it's Emerging.</p>
+  </section>
+
+  <section>
+    <h2>Every source, with its vintage</h2>
+    <div class="src">
+      <div class="src-item">
+        <div class="src-name">College Scorecard — US Dept. of Education</div>
+        <div class="src-what">Program-level earnings and debt, keyed by 4-digit CIP code + credential level, plus the school's accreditor code. This is what lets us rank a <em>welding program</em>, not just a whole school. Pooled across multiple years to reduce noise.</div>
+        <div class="src-vintage">Vintage: most recent available cohort; shown per list edition (2027).</div>
+      </div>
+      <div class="src-item">
+        <div class="src-name">IPEDS — US Dept. of Education</div>
+        <div class="src-what">Institution characteristics, net price, completion, retention, and program offerings. Every school taking federal aid reports.</div>
+        <div class="src-vintage">Vintage: most recent published reporting year.</div>
+      </div>
+      <div class="src-item">
+        <div class="src-name">Accreditation — federal College Scorecard accreditor code</div>
+        <div class="src-what">Across all published lists, the school's accreditor is taken from the federal <code>accreditor_code</code> field (e.g. ACCSC, ABHES, NACCAS, regional). A clean accredited/not signal plus accreditor identity.</div>
+        <div class="src-vintage">Vintage: current federal file.</div>
+      </div>
+      <div class="src-item">
+        <div class="src-name">FAA AMTS — aviation-maintenance licensure</div>
+        <div class="src-what">For aviation lists, the licensure pass rate is the FAA's Aviation Maintenance Technician School Minimum Passage Rate report (14 CFR §147.25), covering 8/2023–12/2024: passing students ÷ (passing + failing) on FAA mechanic tests within 60 days of graduation, matched to schools by FSDO region.</div>
+        <div class="src-vintage">Vintage: FAA report through Q4 2024. <strong>Officially PRELIMINARY</strong> — see the caveat below.</div>
+      </div>
+      <div class="src-item">
+        <div class="src-name">CA Board of Barbering &amp; Cosmetology — cosmetology licensure</div>
+        <div class="src-what">For California cosmetology schools, the pass rate is the Board's "Examination Results by School" report, aggregated across license types (cosmetologist, barber, esthetician, manicurist) and weighted by test-takers. Only schools with at least 30 test-takers are included — smaller cohorts are omitted, never guessed.</div>
+        <div class="src-vintage">Vintage: Q4 2024. <strong>California only</strong> today — see the coverage note below.</div>
+      </div>
+      <div class="src-item">
+        <div class="src-name">DOL RAPIDS — apprenticeship / placement</div>
+        <div class="src-what">Program- and sponsor-level apprenticeship completion data (PII removed), used for apprenticeship-route programs and as a benchmark.</div>
+        <div class="src-vintage">Vintage: latest available extract.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b>On the FAA aviation figures:</b> the FAA passage-rate data is officially <b>preliminary</b> and is <b>not for compliance use</b> until January 2027. We show it because it is the best school-level licensure signal that exists for aviation maintenance, and we label it as preliminary wherever it appears.
+    </div>
+
+    <div class="callout">
+      <b>Licensure coverage is partial — because the public data is.</b> A licensure exam pass rate exists here only where an official source publishes it <em>school-by-school</em>: nationally for aviation (the FAA), and for cosmetology in California (the state board). Many states publish only statewide aggregates, not per-school results, so a by-school rate simply doesn't exist to cite for them — this coverage is limited by what the sources release, not by effort. Schools without a licensure source are scored on the pillars they <em>do</em> have — Pillar 4 re-normalizes over the available signals rather than penalizing a school for a gap in public data. We add a state or vocation whenever an official body publishes by-school results, and we'd rather leave a metric blank than fabricate one. By design, <b>every licensure rate we show traces to an official government source</b> — the FAA and the California state board — never a third-party estimate or an exam vendor.
+    </div>
+  </section>
+
+  <section>
+    <h2>Pillar 5 launches at 0% — and is earned in</h2>
+    <p>Pillar 5 (Student Experience) is a flywheel, not a cold input: it only carries signal <em>after</em> Foundry has users, but the Index has to be credible before that. So it is <strong>never a launch dependency</strong>, and its weight is disclosed here as a versioned roadmap from day one.</p>
+    <ul class="rules">
+      <li><strong>Ships as a Four-Pillar Index (v1).</strong> At launch Pillar 5's weight is <strong>0%</strong>; Pillars 1–4 re-normalize to 100%. Student Experience will be introduced in a future edition as verified review volume grows — the roadmap <em>is</em> the transparency, not a gap we hide.</li>
+      <li><strong>Phased in per school, gated by review volume.</strong> A school with 0–7 reviews is pulled fully to its peer-group mean — the pillar neither helps nor hurts it. Only with hundreds of verified reviews does Pillar 5 move that school's score. The global weight rises <strong>0% → 5% → 10%</strong> across annual editions as aggregate verified-review volume crosses stated thresholds. Thin data never corrupts a ranking.</li>
+      <li><strong>Reviews come from real, verified students</strong> — people who actually attended or seriously considered a program, gathered through Foundry's mentor loop and its Connect counselors. Quality over quantity, honestly labeled: 30 verified reviews beat 3,000 anonymous ones. Pillar 5 is small by design (10% cap) and explicitly subjective.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Corrections, and what a score is not</h2>
+    <p>Every Foundry Score is explainable: it opens to a pillar-by-pillar breakdown and the underlying source figures, so a student learns to read outcomes critically — not just trust a number.</p>
+    <h3>Correction process</h3>
+    <p>A school can flag an error. We cite our sources and either fix it or explain why the figure stands. Corrections are part of the process, not an exception to it.</p>
+    <h3>Disclaimer</h3>
+    <p class="disclaimer">Scores reflect historical, publicly-reported outcomes and are <strong>not a promise of any individual's result</strong>. The Foundry Index is Foundry's point of view — <strong>not</strong> a government, accreditor, or official standard, and it makes no claim of official status.</p>
+  </section>
+
+  <footer>
+    <p>The Foundry Index · edition 2027 · Postmark Digital. Each published list links back to this methodology.</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var API = (new URLSearchParams(location.search)).get('api') || 'https://foundry-proxy.postmarkdigitalco.workers.dev';
+
+  // ---- Static pillar cards (editorial, from the methodology spec) ----
+  var PILLARS = [
+    { n: '1 · Earnings & Return', w: '30%', m: 'Median earnings after completion; earnings vs. local cost of living; debt-to-earnings ratio.', s: 'College Scorecard (program-level, by CIP)' },
+    { n: '2 · Completion & Momentum', w: '20%', m: 'Completion rate; retention; time-to-credential.', s: 'IPEDS' },
+    { n: '3 · Affordability', w: '20%', m: 'Net price; median debt at graduation; share who borrow.', s: 'IPEDS + College Scorecard' },
+    { n: '4 · Credential Quality', w: '20%', m: 'Accreditation; licensure exam pass rate (aviation = the FAA mechanic exam; California cosmetology = the state board); industry-cert alignment; apprenticeship / placement.', s: 'Federal accreditor code · FAA AMTS · CA Board of Barbering & Cosmetology · DOL RAPIDS' },
+    { n: '5 · Student Experience', w: '0% → 10%', m: 'Verified student reviews, Bayesian-weighted so a school with 8 reviews can’t out-rank one with 800 on noise.', s: 'Foundry-collected (phased in — see roadmap)' }
+  ];
+  var pc = document.getElementById('pillars');
+  PILLARS.forEach(function (p) {
+    var el = document.createElement('div'); el.className = 'pillar';
+    el.innerHTML =
+      '<div class="pillar-head"><span class="pillar-name">' + p.n + '</span>' +
+      '<span class="pillar-weight">' + p.w + '</span></div>' +
+      '<div class="pillar-metrics">' + p.m + '</div>' +
+      '<div class="pillar-source">Source: ' + p.s + '</div>';
+    pc.appendChild(el);
+  });
+
+  // ---- Live weight explorer ----
+  var WEIGHT_LABELS = {
+    earnings: 'Earnings & Return', completion: 'Completion', affordability: 'Affordability',
+    credential: 'Credential Quality', experience: 'Student Experience'
+  };
+  var WEIGHT_ORDER = ['earnings', 'completion', 'affordability', 'credential', 'experience'];
+  var pick = document.getElementById('listPick');
+  var meta = document.getElementById('listMeta');
+  var weights = document.getElementById('weights');
+  var errBox = document.getElementById('explorerErr');
+
+  function showErr(msg) { errBox.textContent = msg; errBox.style.display = 'block'; }
+  function clearErr() { errBox.style.display = 'none'; }
+
+  function fmtDate(ms) {
+    if (!ms) return '';
+    try { return new Date(ms).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }); }
+    catch (e) { return ''; }
+  }
+
+  function renderList(d) {
+    clearErr();
+    var w = d.weights || {};
+    var scope = d.scope || {};
+    var scopeBits = [];
+    if (scope.cip4 && scope.cip4.length) scopeBits.push('CIP ' + scope.cip4.join(', '));
+    if (scope.state) scopeBits.push(String(scope.state).toUpperCase());
+    meta.innerHTML =
+      '<span>Edition <b>' + (d.edition || '—') + '</b></span>' +
+      '<span><b>' + (d.rankedCount != null ? d.rankedCount : '—') + '</b> ranked</span>' +
+      '<span><b>' + (d.emergingCount != null ? d.emergingCount : '—') + '</b> emerging</span>' +
+      (scopeBits.length ? '<span>Scope: <b>' + scopeBits.join(' · ') + '</b></span>' : '') +
+      (d.publishedAt ? '<span>Published <b>' + fmtDate(d.publishedAt) + '</b></span>' : '');
+
+    weights.innerHTML = '';
+    WEIGHT_ORDER.forEach(function (k) {
+      var val = typeof w[k] === 'number' ? w[k] : 0;
+      var pct = Math.round(val * 100);
+      var row = document.createElement('div'); row.className = 'wbar-row';
+      row.innerHTML =
+        '<div class="wbar-label">' + WEIGHT_LABELS[k] + '</div>' +
+        '<div class="wbar-track"><div class="wbar-fill"></div></div>' +
+        '<div class="wbar-pct">' + pct + '%</div>';
+      weights.appendChild(row);
+      // Animate width in after layout.
+      var fill = row.querySelector('.wbar-fill');
+      requestAnimationFrame(function () { fill.style.width = pct + '%'; });
+    });
+  }
+
+  function loadList(slug) {
+    fetch(API + '/v1/index/' + encodeURIComponent(slug))
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (d) { if (!d || d.ok === false) throw new Error('not found'); renderList(d); })
+      .catch(function () { showErr('Couldn’t load this list’s weights right now. The pillar defaults above still apply.'); });
+  }
+
+  fetch(API + '/v1/index')
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (d) {
+      var lists = (d && d.lists) || [];
+      if (!lists.length) { pick.innerHTML = '<option>No published lists yet</option>'; return; }
+      pick.innerHTML = '';
+      lists.forEach(function (l) {
+        var o = document.createElement('option');
+        o.value = l.slug; o.textContent = l.title || l.slug;
+        pick.appendChild(o);
+      });
+      pick.addEventListener('change', function () { loadList(pick.value); });
+      loadList(lists[0].slug);
+    })
+    .catch(function () {
+      pick.innerHTML = '<option>Couldn’t load the catalog</option>';
+      showErr('Couldn’t reach the Index right now. The pillar defaults above still describe how every list is built.');
+    });
+})();
+</script>
+</body>
+</html>
