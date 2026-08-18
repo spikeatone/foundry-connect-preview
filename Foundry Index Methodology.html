@@ -90,6 +90,21 @@
   }
   .wrap { max-width: 720px; margin: 0 auto; padding: 40px 22px 80px; }
 
+  /* ---- Breadcrumb (matches Connect's own) ---- */
+  .crumbs {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    font: 600 14px/1 'Sofia Sans', sans-serif; margin: 0 0 26px;
+  }
+  .crumbs:empty { display: none; }
+  .crumbs a {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--fc-soft); text-decoration: none; transition: color .18s;
+  }
+  .crumbs a:hover { color: var(--fc-accent-ink); }
+  .crumbs .sep { color: var(--fc-faint); }
+  .crumbs .here { color: var(--fc-accent-ink); }
+  .crumbs .chev { font-size: 17px; line-height: 1; }
+
   /* ---- Masthead ---- */
   .masthead { margin-bottom: 8px; }
   .kicker {
@@ -180,6 +195,11 @@
 </head>
 <body>
 <div class="wrap">
+
+  <!-- Persistent breadcrumb back into Connect (matches Connect's own breadcrumb). Links are built at
+       runtime from the return context Connect passes (?back / ?slug / ?token / ?as), so this page is
+       no longer a dead end — every crumb returns the reader to the Index view they came from. -->
+  <nav id="fc-crumbs" class="crumbs" aria-label="Breadcrumb"></nav>
 
   <header class="masthead">
     <p class="kicker">The Foundry Index</p>
@@ -293,7 +313,45 @@
 
 <script>
 (function () {
-  var API = (new URLSearchParams(location.search)).get('api') || 'https://foundry-proxy.postmarkdigitalco.workers.dev';
+  var Q = new URLSearchParams(location.search);
+  var API = Q.get('api') || 'https://foundry-proxy.postmarkdigitalco.workers.dev';
+
+  // ---- Breadcrumb back into Connect ----
+  // Connect links here with return context: ?back=index | ?back=indexList&slug=…&listTitle=…, plus
+  // token/as/api to keep the same demo session. We rebuild a Connect-style breadcrumb whose crumbs
+  // link back to Connect at the right view. If there's no return context (opened cold), we still show
+  // a "‹ Foundry Connect" crumb home, so the page is never a dead end.
+  (function buildCrumbs() {
+    var nav = document.getElementById('fc-crumbs');
+    if (!nav) return;
+    // carry the session params back to Connect
+    var carry = [];
+    ['token', 'as', 'api'].forEach(function (k) { var v = Q.get(k); if (v) carry.push(k + '=' + encodeURIComponent(v)); });
+    var connectUrl = function (extra) {
+      var parts = carry.slice();
+      if (extra) parts = parts.concat(extra);
+      return './' + (parts.length ? ('?' + parts.join('&')) : '');
+    };
+    var esc = function (s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; };
+    var back = Q.get('back');
+    var slug = Q.get('slug');
+    var listTitle = Q.get('listTitle');
+
+    var html = '';
+    // 1) Home → Connect
+    html += '<a href="' + connectUrl() + '"><span class="chev">‹</span> Foundry Connect</a>';
+    // 2) The Foundry Index (catalog)
+    html += '<span class="sep">/</span>';
+    html += '<a href="' + connectUrl(['view=index']) + '">The Foundry Index</a>';
+    // 3) the specific list, when we came from one
+    if (back === 'indexList' && slug) {
+      html += '<span class="sep">/</span>';
+      html += '<a href="' + connectUrl(['view=indexList', 'slug=' + encodeURIComponent(slug)]) + '">' + (listTitle ? esc(listTitle) : 'List') + '</a>';
+    }
+    // 4) here (non-link)
+    html += '<span class="sep">/</span><span class="here">How we rank</span>';
+    nav.innerHTML = html;
+  })();
 
   // ---- Static pillar cards (editorial, from the methodology spec) ----
   var PILLARS = [
