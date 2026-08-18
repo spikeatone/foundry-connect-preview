@@ -9,36 +9,72 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Sofia+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ---- Theme tokens (light default; dark via prefers-color-scheme) ---- */
+  /* ---- Foundry Connect design tokens (the shared --fc-* system) ----
+     This page mirrors Connect's palette exactly. The local names (--ink, --card, …)
+     are kept as aliases onto the canonical --fc-* tokens so all existing usages below
+     resolve to the Connect palette with no per-rule churn. Light is the default; dark
+     applies both when Connect stamps [data-theme="dark"] (if ever embedded/themed) AND,
+     since this page has no theme toggle of its own, via the viewer's OS setting. */
   :root {
-    --bg-top: #FBF5EC;
-    --bg-bottom: #F3E7D6;
-    --ink: #241a10;
-    --ink-soft: #6a5c49;
-    --card: #ffffff;
-    --card-border: rgba(60, 44, 24, 0.12);
-    --ember: #F47F21;
-    --ember-deep: #E06E12;
-    --rule: rgba(60, 44, 24, 0.14);
-    --chip: rgba(244, 127, 33, 0.10);
-    --bar-track: rgba(60, 44, 24, 0.10);
-    --warn-bg: rgba(244, 127, 33, 0.10);
+    /* canonical Connect tokens (light) */
+    --fc-page: linear-gradient(180deg,#FFFFFF 0%,#F2ECDE 100%);
+    --fc-surface: #FFFFFF;
+    --fc-card: #FFFFFF;
+    --fc-soft-panel: #F7F1E6;
+    --fc-ink: #1C1C1F;
+    --fc-soft: #6B6257;
+    --fc-faint: #9B9187;
+    --fc-line: rgba(28,28,31,.09);
+    --fc-line2: rgba(28,28,31,.14);
+    --fc-accent-ink: #B85E14;
+    --fc-chip-bg: #FBEEDD;
+    --fc-spark: #4E7A93;
+    --fc-spark-bg: #E7EFF3;
+    /* local aliases → Connect tokens */
+    --bg-page: var(--fc-page);
+    --ink: var(--fc-ink);
+    --ink-soft: var(--fc-soft);
+    --card: var(--fc-card);
+    --card-border: var(--fc-line);
+    --ember: var(--fc-accent-ink);
+    --ember-deep: var(--fc-accent-ink);
+    --rule: var(--fc-line);
+    --chip: var(--fc-chip-bg);
+    --bar-track: var(--fc-line2);
+    --warn-bg: var(--fc-chip-bg);
     --warn-border: rgba(244, 127, 33, 0.35);
   }
+  :root[data-theme="dark"] {
+    --fc-page: linear-gradient(180deg,#36586C 0%,#1E2C34 60%,#182128 100%);
+    --fc-surface: #212226;
+    --fc-card: #272A2F;
+    --fc-soft-panel: #232D34;
+    --fc-ink: #F3EFE8;
+    --fc-soft: #B7C4CB;
+    --fc-faint: #8593A0;
+    --fc-line: rgba(255,255,255,.09);
+    --fc-line2: rgba(255,255,255,.16);
+    --fc-accent-ink: #F89C1C;
+    --fc-chip-bg: rgba(244,127,33,.16);
+    --fc-spark: #A1C7DC;
+    --fc-spark-bg: rgba(161,199,220,.14);
+    --warn-border: rgba(251, 148, 64, 0.34);
+  }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg-top: #1a1206;
-      --bg-bottom: #0f0b05;
-      --ink: #f3ead9;
-      --ink-soft: #b6a790;
-      --card: #221a0f;
-      --card-border: rgba(255, 236, 200, 0.12);
-      --ember: #FB9440;
-      --ember-deep: #F47F21;
-      --rule: rgba(255, 236, 200, 0.14);
-      --chip: rgba(251, 148, 64, 0.14);
-      --bar-track: rgba(255, 236, 200, 0.10);
-      --warn-bg: rgba(251, 148, 64, 0.10);
+    :root:not([data-theme="light"]) {
+      --fc-page: linear-gradient(180deg,#36586C 0%,#1E2C34 60%,#182128 100%);
+      --fc-surface: #212226;
+      --fc-card: #272A2F;
+      --fc-soft-panel: #232D34;
+      --fc-ink: #F3EFE8;
+      --fc-soft: #B7C4CB;
+      --fc-faint: #8593A0;
+      --fc-line: rgba(255,255,255,.09);
+      --fc-line2: rgba(255,255,255,.16);
+      --fc-accent-ink: #F89C1C;
+      --fc-chip-bg: rgba(244,127,33,.16);
+      --fc-spark: #A1C7DC;
+      --fc-spark-bg: rgba(161,199,220,.14);
       --warn-border: rgba(251, 148, 64, 0.34);
     }
   }
@@ -46,8 +82,8 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%) fixed;
-    color: var(--ink);
+    background: var(--fc-page) fixed;
+    color: var(--fc-ink);
     font-family: 'Sofia Sans', system-ui, sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -109,7 +145,7 @@
   .wbar-row { display: grid; grid-template-columns: 128px 1fr 48px; align-items: center; gap: 10px; }
   .wbar-label { font-size: 13.5px; font-weight: 600; }
   .wbar-track { background: var(--bar-track); border-radius: 999px; height: 9px; overflow: hidden; }
-  .wbar-fill { background: var(--ember); height: 100%; border-radius: 999px; width: 0; transition: width .4s ease; }
+  .wbar-fill { background: #F47F21; height: 100%; border-radius: 999px; width: 0; transition: width .4s ease; }
   .wbar-pct { font-size: 13px; font-weight: 700; text-align: right; color: var(--ink); }
   .explorer-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 14px; }
   .explorer-err { color: var(--ember-deep); font-size: 13.5px; font-weight: 600; margin-top: 12px; }
