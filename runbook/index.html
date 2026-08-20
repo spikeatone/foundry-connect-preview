@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400&family=Sofia+Sans:wght@400;600;800&display=swap">
+<title>Foundry Demo Runbook</title>
+<style>
+
+
+
+
+  /* ---- Foundry brand tokens (light default) ---- */
+  :root {
+    --page-top:#FFFFFF; --page-bottom:#F2ECDE;
+    --surface:#FFFFFF; --panel:#F7F1E6;
+    --ink:#1C1C1F; --soft:#6B6257; --faint:#9B9187;
+    --line:rgba(28,28,31,.10); --line2:rgba(28,28,31,.16);
+    --ember:#B85E14; --ember-solid:#F47F21;
+    --spark:#3F6B84; --spark-bg:#E7EFF3;
+    --chip-bg:#FBEEDD;
+    --shadow:0 18px 50px rgba(24,33,40,.10);
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page-top:#36586C; --page-bottom:#182128;
+      --surface:#212226; --panel:#232D34;
+      --ink:#F3EFE8; --soft:#B7C4CB; --faint:#8593A0;
+      --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.17);
+      --ember:#F89C1C; --ember-solid:#F47F21;
+      --spark:#A1C7DC; --spark-bg:rgba(161,199,220,.14);
+      --chip-bg:rgba(244,127,33,.16);
+      --shadow:0 18px 50px rgba(0,0,0,.34);
+    }
+  }
+  :root[data-theme="dark"] {
+    --page-top:#36586C; --page-bottom:#182128;
+    --surface:#212226; --panel:#232D34;
+    --ink:#F3EFE8; --soft:#B7C4CB; --faint:#8593A0;
+    --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.17);
+    --ember:#F89C1C; --ember-solid:#F47F21;
+    --spark:#A1C7DC; --spark-bg:rgba(161,199,220,.14);
+    --chip-bg:rgba(244,127,33,.16);
+    --shadow:0 18px 50px rgba(0,0,0,.34);
+  }
+
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    margin:0;
+    background:linear-gradient(180deg,var(--page-top) 0%,var(--page-bottom) 100%) fixed;
+    color:var(--ink);
+    font-family:'Sofia Sans',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:760px; margin:0 auto; padding:48px 22px 96px; }
+
+  /* ---- Masthead ---- */
+  .flame { width:26px; height:41px; display:block; }
+  .eyebrow { font-weight:800; font-size:12px; letter-spacing:.15em; text-transform:uppercase; color:var(--ember); margin:0; }
+  .brandrow { display:flex; align-items:center; gap:11px; margin:0 0 22px; }
+  h1 {
+    font-family:'Literata',Georgia,serif; font-weight:400;
+    font-size:clamp(32px,6vw,46px); line-height:1.06; letter-spacing:-.015em;
+    margin:0 0 14px; text-wrap:balance;
+  }
+  .lede { font-size:clamp(16px,2.3vw,18.5px); color:var(--soft); margin:0; max-width:62ch; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0; }
+  .badge {
+    font-size:12.5px; font-weight:600; color:var(--soft);
+    background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:6px 12px;
+  }
+  .badge b { color:var(--ink); font-weight:700; }
+
+  hr.rule { height:1px; background:var(--line); border:0; margin:38px 0; }
+
+  /* ---- The pass diagram ---- */
+  .pass {
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    box-shadow:var(--shadow); padding:22px 22px 24px; margin:26px 0 6px;
+  }
+  .pass-h { font:800 10.5px/1 'Sofia Sans',sans-serif; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin:0 0 16px; }
+  .pass-grid { display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:stretch; }
+  /* Stacked (mobile): one column. The connector is decorative (aria-hidden) and, rotated 90°, it
+     read as a stray vertical arrow floating beside the phone-lane steps. Hide it when stacked. */
+  @media (max-width:560px){ .pass-grid { grid-template-columns:1fr; } .pass-mid { display:none; } }
+  .lane { border-radius:12px; padding:14px 15px; }
+  .lane.phone { background:var(--chip-bg); border:1px solid var(--line); }
+  .lane.web { background:var(--spark-bg); border:1px solid var(--line); }
+  .lane-t { font:800 12px/1 'Sofia Sans',sans-serif; letter-spacing:.02em; margin:0 0 10px; display:flex; align-items:center; gap:7px; }
+  .lane.phone .lane-t { color:var(--ember); }
+  .lane.web .lane-t { color:var(--spark); }
+  .lane ol { margin:0; padding:0 0 0 2px; list-style:none; counter-reset:l; }
+  .lane li { font:400 13px/1.45 'Sofia Sans',sans-serif; color:var(--ink); margin:0 0 7px; padding-left:20px; position:relative; }
+  .lane li::before { counter-increment:l; content:counter(l); position:absolute; left:0; top:1px; font:700 10px/1.4 'Sofia Sans',sans-serif; color:var(--faint); }
+  .pass-mid { align-self:center; color:var(--faint); font-size:22px; font-family:system-ui,sans-serif; }
+  /* Arrows: the subsetted Sofia Sans/Literata woff2 don't carry U+2192/U+2194, so iOS Safari
+     substitutes a mis-baselined fallback glyph (looked like a stray vertical arrow). Render every
+     arrow in the always-present system font instead. */
+  .ar { font-family:system-ui,'Segoe UI Symbol',sans-serif; }
+
+  /* ---- Phases ---- */
+  .phase { margin:40px 0 0; }
+  .phase-head { display:flex; align-items:baseline; gap:14px; margin:0 0 6px; }
+  .phase-num {
+    font-family:'Literata',serif; font-size:15px; font-weight:400; color:var(--ember);
+    border:1px solid var(--line2); border-radius:50%; width:38px; height:38px; flex:none;
+    display:flex; align-items:center; justify-content:center; align-self:flex-start;
+    font-variant-numeric:tabular-nums;
+  }
+  h2 { font-family:'Literata',Georgia,serif; font-weight:400; font-size:clamp(22px,3.4vw,27px); line-height:1.15; letter-spacing:-.01em; margin:0; text-wrap:balance; }
+  .phase-time { font:600 12.5px/1 'Sofia Sans',sans-serif; color:var(--faint); margin:3px 0 0; }
+  .phase-body { margin:14px 0 0; padding-left:52px; }
+  @media (max-width:560px){ .phase-body { padding-left:0; } }
+  h3 { font:700 16px/1.3 'Sofia Sans',sans-serif; color:var(--ink); margin:22px 0 8px; }
+  p { margin:0 0 12px; max-width:64ch; }
+  strong { font-weight:700; }
+  em { font-style:italic; color:var(--soft); }
+  a { color:var(--ember); text-decoration:none; border-bottom:1px solid color-mix(in srgb, var(--ember) 40%, transparent); }
+  a:hover { color:var(--ember-solid); }
+
+  /* step list */
+  ul.steps { list-style:none; margin:6px 0 14px; padding:0; display:flex; flex-direction:column; gap:10px; }
+  ul.steps li { position:relative; padding-left:22px; font-size:15px; max-width:64ch; }
+  ul.steps li::before { content:""; position:absolute; left:2px; top:9px; width:7px; height:7px; border-radius:2px; background:var(--ember); }
+
+  /* device chip */
+  .dev { display:inline-flex; align-items:center; gap:5px; font:700 11px/1 'Sofia Sans',sans-serif; letter-spacing:.02em; text-transform:uppercase; padding:4px 9px; border-radius:999px; vertical-align:middle; white-space:nowrap; }
+  .dev.phone { color:var(--ember); background:var(--chip-bg); }
+  .dev.web { color:var(--spark); background:var(--spark-bg); }
+
+  /* callout */
+  .note { border-left:3px solid var(--ember-solid); background:var(--chip-bg); border-radius:0 10px 10px 0; padding:13px 16px; margin:16px 0; font-size:14.5px; }
+  .note b { font-weight:800; }
+  .note.plain { border-left-color:var(--spark); background:var(--spark-bg); }
+
+  /* say-this pull quotes */
+  .say { font-family:'Literata',serif; font-style:italic; font-size:16.5px; line-height:1.5; color:var(--ink); border-left:3px solid var(--line2); padding:2px 0 2px 16px; margin:14px 0; }
+  .say::before { content:"Say: "; font-family:'Sofia Sans',sans-serif; font-style:normal; font-weight:800; font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--faint); display:block; margin:0 0 5px; }
+
+  /* code / url */
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.88em; background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:2px 6px; }
+
+  footer { margin:52px 0 0; padding:22px 0 0; border-top:1px solid var(--line); color:var(--faint); font-size:13px; }
+  footer a { color:var(--ember); }
+
+  :focus-visible { outline:2px solid var(--ember-solid); outline-offset:2px; border-radius:3px; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+  <header>
+    <div class="brandrow">
+      <svg class="flame" viewBox="0 0 138.001 220.006" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M76.8264 77.8575C67.4409 95.8315 49.6232 109.739 37.7834 124.587C10.7542 158.48 26.5169 193.938 56.7542 218.975C38.0475 216.836 21.4924 202.593 14.1103 194.157C-13.7242 162.359 5.18856 123.17 23.2381 93.0474C39.323 66.1991 66.4296 42.1156 69.2639 0C84.55 27.1447 90.3668 51.9372 76.8264 77.8575ZM97.6266 75.0154C97.1048 84.0121 90.5536 92.2161 83.1328 100.085C61.6949 122.822 37.5064 130.819 35.8316 158.351C34.3371 182.866 50.6281 200.795 50.6281 200.795C50.6281 200.795 49.4042 190.812 61.8302 177.214C71.4347 166.703 81.4709 161.934 91.3782 152.563C96.2867 147.917 101.827 140.873 102.258 133.803C112.475 150.733 114.749 165.008 113.525 178.529C112.146 193.803 106.207 205.487 98.7152 213.543C120.462 205.281 135.027 182.247 137.204 169.693C144.638 126.766 97.6266 75.0218 97.6266 75.0218V75.0154ZM72.5234 220C79.1519 220 86.869 216.075 93.4202 204.288C99.076 194.112 98.6766 181.242 96.7376 173.979C89.0527 188.582 75.274 189.433 68.9483 199.171C61.6176 208.541 63.8593 220.006 72.5169 220.006L72.5234 220Z" fill="url(#fl)"/><defs><linearGradient id="fl" x1=".003" y1="109.997" x2="138.003" y2="109.997" gradientUnits="userSpaceOnUse"><stop stop-color="#F1D131"/><stop offset=".43" stop-color="#FAA91A"/><stop offset=".81" stop-color="#F26E24"/><stop offset="1" stop-color="#F05E25"/></linearGradient></defs></svg>
+      <p class="eyebrow">Foundry &#183; Demo Runbook</p>
+    </div>
+    <h1>How to show the whole thing, end to end</h1>
+    <p class="lede">The student app, the app&#8202;<span class="ar">&#8596;</span>&#8202;Connect handoff, and the Foundry Index &#8212; one live walkthrough for a prospect or partner. Keep this open on a second screen and follow the phases in order.</p>
+    <div class="meta">
+      <span class="badge">App&nbsp;side &#183; <b>TestFlight Build 8</b></span>
+      <span class="badge">Connect &#183; <b>live at foundryconnect.me</b></span>
+      <span class="badge">Bring &#183; <b>1 iPhone + 1 laptop</b></span>
+    </div>
+  </header>
+
+  <div class="pass">
+    <p class="pass-h">The pass &#8212; who does what</p>
+    <div class="pass-grid">
+      <div class="lane phone">
+        <p class="lane-t">&#128241; On the phone <span style="color:var(--soft);font-weight:600">(the student)</span></p>
+        <ol>
+          <li>Enable demo mode (Me <span class="ar">&#8594;</span> tap &#8220;Signed in as&#8221; &#215;7)</li>
+          <li>Interview <span class="ar">&#8594;</span> Portrait <span class="ar">&#8594;</span> sign in</li>
+          <li>Pick a Path <span class="ar">&#8594;</span> &#8220;I did this&#8221; <span class="ar">&#8594;</span> reflect</li>
+          <li>Who can see me <span class="ar">&#8594;</span> set grants <span class="ar">&#8594;</span> copy the link</li>
+          <li>Flip a grant live &#183; read the advisor&#8217;s note</li>
+        </ol>
+      </div>
+      <div class="pass-mid" aria-hidden="true">&#8644;</div>
+      <div class="lane web">
+        <p class="lane-t">&#128187; On Connect <span style="color:var(--soft);font-weight:600">(the adult)</span></p>
+        <ol>
+          <li>Paste the link <span class="ar">&#8594;</span> the granted view of the student</li>
+          <li>Watch it update ~4s after a grant flips</li>
+          <li>Send a note back <span class="ar">&#8594;</span> lands in the app inbox</li>
+          <li>The Foundry Index <span class="ar">&#8594;</span> a list <span class="ar">&#8594;</span> search / ZIP sort</li>
+          <li>&#8220;How we rank&#8221; <span class="ar">&#8594;</span> methodology <span class="ar">&#8594;</span> breadcrumb back</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- PHASE 0 -->
+  <section class="phase">
+    <div class="phase-head">
+      <span class="phase-num">0</span>
+      <div><h2>Before the demo &#8212; turn on demo mode</h2><p class="phase-time">~5 min &#183; once</p></div>
+    </div>
+    <div class="phase-body">
+      <p>Two things in the room: <strong>a real iPhone with Build&nbsp;8</strong> (the simulator can&#8217;t do this &#8212; no real Sign in with Apple, no on-device voice) and <strong>a laptop</strong> for Connect.</p>
+      <p>On the phone, get to a signed-in account, then:</p>
+      <ul class="steps">
+        <li>Go to the <strong>Me</strong> tab.</li>
+        <li><span class="dev phone">&#128241; Phone</span> Tap the <strong>&#8220;Signed in as&#8230;&#8221;</strong> row <strong>7 times</strong>. A hidden <strong>&#8220;Enable demo mode&#8221;</strong> button appears. <em>The whole row is the target &#8212; just keep tapping.</em></li>
+        <li>Tap <strong>Enable demo mode</strong>. It seeds <strong>three Connect advisors</strong> (counselor / parent / coach) and mints the <strong>demo token</strong> Connect reads. The button then reads <em>&#8220;Demo mode on, re-sync advisors&#8221;</em> &#8212; tap it anytime to reset advisors + grants between demos.</li>
+        <li><strong>&#8220;Start fresh (demo)&#8221;</strong> also appears &#8212; it wipes the profile to blank so you can run the Interview from zero in front of the prospect. Use it right before showing the magic.</li>
+      </ul>
+      <div class="note"><b>If you don&#8217;t see these:</b> demo mode + &#8220;Start fresh&#8221; only show on a demo-enabled account and never ship to normal users. No buttons = you haven&#8217;t done the 7-tap yet.</div>
+    </div>
+  </section>
+
+  <!-- PHASE 1 -->
+  <section class="phase">
+    <div class="phase-head">
+      <span class="phase-num">1</span>
+      <div><h2>The app &#8212; the magic</h2><p class="phase-time">5&#8211;8 min</p></div>
+    </div>
+    <div class="phase-body">
+      <p class="say">Foundry is a decade-long mentor for the teenager skipping college for a trade. It gets to know them, shows them real paths, and stays honest the whole way.</p>
+
+      <h3>The Interview <span class="ar">&#8594;</span> Portrait</h3>
+      <ul class="steps">
+        <li>After <strong>Start fresh</strong>, the app opens on Welcome <span class="ar">&#8594;</span> the <strong>Interview</strong>: a warm, one-question-at-a-time conversation.</li>
+        <li><span class="dev phone">&#128241; Phone</span> <strong>Type</strong> a few answers &#8212; or tap the <strong>mic</strong> and <em>talk</em> them (on-device; nothing leaves the phone). Show both; the mic is the &#8220;kids won&#8217;t type a paragraph&#8221; story.</li>
+        <li>Tap <strong>&#8220;See what I&#8217;m seeing.&#8221;</strong> The <strong>constellation</strong> forms, then the <strong>Portrait</strong>: a reflection + 3&#8211;5 gentle possibilities (one &#8220;new to you&#8221;) + an <strong>honest note</strong>.</li>
+        <li>The Portrait offers <strong>Sign in with Apple</strong> &#8212; magic-first: the whole Interview is account-free; accounts come after the payoff.</li>
+      </ul>
+      <div class="note"><b>Voice pauses are fixed in Build 7.</b> Pause mid-sentence and earlier words are <b>not</b> erased &#8212; worth a beat if the prospect cares about the detail.</div>
+      <p class="say">Real ranges, no fantasies &#8212; it never tells a kid what they want to hear.</p>
+
+      <h3>Home &#8212; the returning student</h3>
+      <p>Signed in, the app is <strong>Home</strong> with five tabs: <strong>Home &#183; Paths &#183; Schools &#183; Mentor &#183; Me.</strong></p>
+      <ul class="steps">
+        <li><strong>Pick up a Path</strong> from a possibility <span class="ar">&#8594;</span> it seeds a first <strong>Step</strong> (a real next action).</li>
+        <li><span class="dev phone">&#128241; Phone</span> Mark a Step <strong>&#8220;I did this&#8221;</strong> <span class="ar">&#8594;</span> a short <strong>reflection</strong> <span class="ar">&#8594;</span> the mentor reacts and logs an <strong>Experience</strong>. Show the trail filling in &#8212; <em>the read grows.</em></li>
+        <li><strong>Schools</strong> = the <strong>Foundry Index</strong>: honest school rankings (earnings, completion, licensure pass rates &#8212; e.g. &#8220;92% FAA exam pass&#8221;). <em>Not a career quiz &#8212; real schools on public outcome data.</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PHASE 2 -->
+  <section class="phase">
+    <div class="phase-head">
+      <span class="phase-num">2</span>
+      <div><h2>Privacy &#8212; &#8220;Who can see me&#8221;</h2><p class="phase-time">~2 min</p></div>
+    </div>
+    <div class="phase-body">
+      <p>The spine of the product: <strong>the student controls everything, private by default.</strong></p>
+      <ul class="steps">
+        <li><span class="dev phone">&#128241; Phone</span> Me <span class="ar">&#8594;</span> <strong>Who can see me</strong>. Three seeded advisors, each with <strong>per-aspect grants</strong> (Portrait, Paths, Experiences, Steps, the road ahead, and <strong>messages</strong> as its own channel).</li>
+        <li>Toggle one on/off &#8212; <em>the student decides, per person, per aspect. A parent and a counselor can see completely different things.</em></li>
+        <li>Leave one advisor (say the <strong>counselor</strong>) set with Portrait + Paths + messages <strong>on</strong> for the handoff next.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PHASE 3 -->
+  <section class="phase">
+    <div class="phase-head">
+      <span class="phase-num">3</span>
+      <div><h2>The app&#8202;<span class="ar">&#8596;</span>&#8202;Connect handoff &#8212; the &#8220;aha&#8221;</h2><p class="phase-time">3&#8211;4 min</p></div>
+    </div>
+    <div class="phase-body">
+      <p>The money shot: <strong>the student&#8217;s phone controls what a trusted adult sees on the web, live.</strong></p>
+      <ul class="steps">
+        <li><span class="dev phone">&#128241; Phone</span> Who can see me <span class="ar">&#8594;</span> pick the counselor <span class="ar">&#8594;</span> <strong>&#8220;Copy Connect preview link.&#8221;</strong> A real URL: <code>foundryconnect.me/?token=&#8230;&amp;as=counselor</code>.</li>
+        <li><span class="dev web">&#128187; Connect</span> Paste it into the laptop browser <span class="ar">&#8594;</span> <strong>Foundry Connect</strong> opens showing <strong>that student&#8217;s real, grant-filtered data</strong> &#8212; only what the counselor may see.</li>
+        <li><span class="dev phone">&#128241; Phone</span> Flip a grant (turn Paths off). Within a few seconds the Connect page <strong>updates on its own</strong> (it polls every 4s). <em>The student just changed what their counselor sees, from their pocket.</em></li>
+        <li><span class="dev web">&#128187; Connect</span> With messages granted, use the <strong>&#8220;Reach out&#8221;</strong> box <span class="ar">&#8594;</span> type a note <span class="ar">&#8594;</span> <strong>Send</strong>. It lands in the student&#8217;s <strong>Mentor tab <span class="ar">&#8594;</span> &#8220;Notes from your people.&#8221;</strong> Full loop, both directions.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PHASE 4 -->
+  <section class="phase">
+    <div class="phase-head">
+      <span class="phase-num">4</span>
+      <div><h2>The Foundry Index in Connect &#8212; discovery</h2><p class="phase-time">2&#8211;3 min</p></div>
+    </div>
+    <div class="phase-body">
+      <p>Connect isn&#8217;t only a mirror of the student &#8212; it&#8217;s a discovery surface for the advisor.</p>
+      <ul class="steps">
+        <li><span class="dev web">&#128187; Connect</span> Top bar <span class="ar">&#8594;</span> <strong>&#8220;The Foundry Index&#8221;</strong> <span class="ar">&#8594;</span> the <strong>catalog</strong> (21 lists: aviation, welding, electrical, cosmetology, HVAC, &#8230;).</li>
+        <li>Tap a list <span class="ar">&#8594;</span> the <strong>ranked schools</strong> with honest stat chips. An <strong>&#8220;Emerging&#8221;</strong> tier sits separately for schools without enough outcome data &#8212; <em>never a fake rank.</em></li>
+        <li><strong>Search</strong> &#8212; type a school / city / state to filter live.</li>
+        <li><strong>Proximity</strong> &#8212; enter a <strong>ZIP</strong> <span class="ar">&#8594;</span> schools re-sort <strong>nearest-first</strong> with &#8220;~N mi&#8221; chips. <em>An advisor in Dallas types their ZIP and sees the closest programs first.</em></li>
+        <li><strong>&#8220;How we rank <span class="ar">&#8594;</span>&#8221;</strong> <span class="ar">&#8594;</span> the <strong>Methodology page</strong>: every pillar, every source with its vintage, the honesty rules. <em>The trust play &#8212; we show our work.</em> The breadcrumb brings you right back.</li>
+        <li><strong>Light / dark</strong> &#8212; the toggle persists; set whichever reads best in the room.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PHASE 5 -->
+  <section class="phase">
+    <div class="phase-head">
+      <span class="phase-num">5</span>
+      <div><h2>The honesty spine &#8212; weave it throughout</h2><p class="phase-time">the close</p></div>
+    </div>
+    <div class="phase-body">
+      <ul class="steps">
+        <li><strong>Honest by default</strong> &#8212; real ranges, real trade-offs, never a fantasy. &#8220;Emerging&#8221; instead of a faked rank; earnings as ranges; every licensure rate traces to an official government source.</li>
+        <li><strong>Privacy is the foundation</strong> &#8212; student-controlled, per-aspect, private by default. Nothing shared unless the student turns it on &#8212; and off any second (show the live grant flip).</li>
+        <li><strong>On-device where it counts</strong> &#8212; the voice / Interview audio never leaves the phone.</li>
+        <li><strong>A decade, not a quiz</strong> &#8212; it remembers what they&#8217;ve tried, the read grows, it stays with them for years.</li>
+      </ul>
+
+      <h3>Reset between demos</h3>
+      <ul class="steps">
+        <li><span class="dev phone">&#128241; Phone</span> Me <span class="ar">&#8594;</span> <strong>Start fresh (demo)</strong> to run the Interview from zero again.</li>
+        <li><span class="dev phone">&#128241; Phone</span> Me <span class="ar">&#8594;</span> <strong>&#8220;Demo mode on, re-sync advisors&#8221;</strong> to reset the three advisors + grants.</li>
+        <li><span class="dev web">&#128187; Connect</span> Reload the preview link &#8212; it re-reads the student&#8217;s current grants.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Foundry &#183; Demo Runbook &#183; app = TestFlight Build&nbsp;8 &#183; Connect live at <a href="https://foundryconnect.me">foundryconnect.me</a>. Mirrors <code>DEMO-RUNBOOK.md</code> in the repo.
+  </footer>
+
+</div>
+
+</body>
+</html>
