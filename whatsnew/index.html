@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What's new on Foundry Connect</title>
+  <meta name="description" content="Connect is now a living window: it shows what changed since your last look, closes the loop on your notes, and puts real rankings around a young person's real paths.">
+  <meta name="theme-color" content="#182128">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Foundry">
+  <meta property="og:title" content="What's new on Foundry Connect">
+  <meta property="og:description" content="The window now shows you what moved: change markers, note receipts, a weekly digest, and the Foundry Index through the student's lens.">
+  <meta property="og:url" content="https://foundryconnect.me/whatsnew/">
+  <meta property="og:image" content="https://foundryconnect.me/og-foundry.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Sofia+Sans:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --bg-top: #FFFFFF;
+    --bg-bottom: #F2ECDE;
+    --ink: #1C1C1F;
+    --read: #856A57;
+    --soft: #6E6259;
+    --faint: #9A8F85;
+    --card: #FFFFFF;
+    --line: #E8E0D2;
+    --flame: #F47F21;
+    --flame-deep: #E06E12;
+    --chip-bg: #FBF0E3;
+    --chip-border: #F0D9BF;
+    --spark: #3E6E8C;
+    --spark-bg: #E9F1F6;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-top: #36586C;
+      --bg-bottom: #182128;
+      --ink: #F3EFE8;
+      --read: #A1C7DC;
+      --soft: #C3CDD4;
+      --faint: #8593A0;
+      --card: #212B32;
+      --line: #31404B;
+      --chip-bg: #2C3A44;
+      --chip-border: #47565f;
+      --spark: #8FC1DC;
+      --spark-bg: #24404F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg-top: #36586C;
+    --bg-bottom: #182128;
+    --ink: #F3EFE8;
+    --read: #A1C7DC;
+    --soft: #C3CDD4;
+    --faint: #8593A0;
+    --card: #212B32;
+    --line: #31404B;
+    --chip-bg: #2C3A44;
+    --chip-border: #47565f;
+    --spark: #8FC1DC;
+    --spark-bg: #24404F;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg-bottom);
+    background-image: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 520px);
+    color: var(--ink);
+    font: 400 15.5px/1.65 "Sofia Sans", system-ui, sans-serif;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 56px 24px 88px; }
+
+  header { display: flex; flex-direction: column; gap: 18px; margin: 0 0 14px; }
+  .brandline { display: flex; align-items: center; gap: 10px; }
+  .flame { width: 22px; height: 28px; flex: none; }
+  .wordmark {
+    font: 800 12.5px/1 "Sofia Sans", sans-serif;
+    letter-spacing: .24em; text-transform: uppercase; color: var(--flame);
+  }
+  h1 {
+    margin: 0;
+    font: 400 clamp(30px, 5.4vw, 40px)/1.15 "Literata", Georgia, serif;
+    text-wrap: balance;
+  }
+  .dek {
+    margin: 0; max-width: 56ch;
+    font: 400 17px/1.6 "Literata", Georgia, serif; color: var(--read);
+  }
+  .stamp { font: 600 12px/1 "Sofia Sans", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+
+  .mark {
+    display: flex; align-items: center; gap: 10px;
+    margin: 46px 0 6px;
+  }
+  .mark::before { content: ""; width: 22px; height: 2px; background: var(--flame); flex: none; }
+  .mark span {
+    font: 800 11px/1 "Sofia Sans", sans-serif;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--soft);
+  }
+
+  .item { border-bottom: 1px solid var(--line); padding: 20px 0 22px; }
+  .item:last-of-type { border-bottom: none; }
+  .item h2 {
+    margin: 0 0 6px;
+    font: 500 20px/1.3 "Literata", Georgia, serif;
+    text-wrap: balance;
+  }
+  .item p { margin: 0 0 8px; max-width: 62ch; color: var(--soft); }
+  .item p:last-child { margin-bottom: 0; }
+  .quotecopy {
+    font: 400 15px/1.6 "Literata", Georgia, serif; color: var(--read);
+    border-left: 3px solid var(--flame);
+    padding: 2px 0 2px 14px; margin: 10px 0 8px; max-width: 58ch;
+  }
+  .why { font-size: 13.5px; color: var(--faint); }
+  .why b { color: var(--soft); font-weight: 700; }
+
+  .chip {
+    display: inline-block; vertical-align: 2px;
+    font: 800 9.5px/1 "Sofia Sans", sans-serif; letter-spacing: .1em;
+    color: #fff; background: var(--flame);
+    border-radius: 9px; padding: 3px 7px; margin-left: 8px;
+  }
+  .chip.spark { background: var(--spark); color: var(--card); }
+
+  .fixes { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; margin-top: 10px; }
+  .fixes ul { margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 9px; }
+  .fixes li { color: var(--soft); font-size: 14px; }
+  .fixes li b { color: var(--ink); font-weight: 700; }
+
+  .note {
+    margin-top: 40px; text-align: center;
+    font: 400 13px/1.6 "Sofia Sans", sans-serif; color: var(--faint);
+  }
+  .note a { color: var(--flame); text-decoration: none; font-weight: 700; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brandline">
+      <svg class="flame" viewBox="0 0 22 28" aria-hidden="true">
+        <defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#F1D131"/><stop offset=".45" stop-color="#FAA91A"/>
+          <stop offset=".8" stop-color="#F26E24"/><stop offset="1" stop-color="#F05E25"/>
+        </linearGradient></defs>
+        <path fill="url(#fg)" d="M11 0c1.4 4.6-.6 6.9-2.6 9.2C6.3 11.6 4 14.2 4 18.4 4 23.7 7.4 28 11 28s7-4.3 7-9.6c0-2.9-1.1-5-2.4-6.9-.4 1.5-1.2 2.7-2.6 3.3.6-3.9-.3-9.6-2-14.8z"/>
+      </svg>
+      <a href="/" style="text-decoration:none"><span class="wordmark">Foundry Connect</span></a>
+    </div>
+    <h1>The window now shows you what moved.</h1>
+    <p class="dek">Connect began as a beautiful snapshot: who this young person is, what they chose to share. This release makes it a living window. It tells you what changed, closes the loop when you reach out, and puts real rankings around their real paths.</p>
+    <div class="stamp">Released August 21, 2026 · foundryconnect.me</div>
+  </header>
+
+  <div class="mark"><span>Coming back is now worth it</span></div>
+
+  <div class="item">
+    <h2>Since you last looked <span class="chip">New</span></h2>
+    <p>The recap opens with a quiet line when something changed: <i>"Since you last looked: 1 new experience and 1 new path."</i> Fresh trail entries carry a small NEW marker so your eye lands on what's actually new.</p>
+    <p class="why"><b>Still theirs:</b> the strip only counts what that student shared with <i>you</i>. An advisor without the trail sees only the path changes.</p>
+  </div>
+
+  <div class="item">
+    <h2>Notes come full circle</h2>
+    <p>Your sent notes now live under the composer, and when the student opens one in the app, its status turns from <i>Sent</i> to <i>"saw this."</i> A receipt, not a read-timestamp: you know it landed, and that's all.</p>
+    <div class="quotecopy">He just logged "Toured the Cascade Wind training tower". A good week for a short note.</div>
+    <p class="why"><b>And a well-timed prompt:</b> when something new lands, Connect suggests the moment, so encouragement arrives when it means the most.</p>
+  </div>
+
+  <div class="item">
+    <h2>A weekly digest, if you want one</h2>
+    <p>Turn on the digest, add your email, pick weekly or monthly. On quiet weeks nothing is sent.</p>
+    <p class="why"><b>The hard promise:</b> the email only says there is new activity and links you back here. What the student shared never leaves the window.</p>
+  </div>
+
+  <div class="mark"><span>The Foundry Index, through their lens</span></div>
+
+  <div class="item">
+    <h2>Rankings that start from their paths</h2>
+    <p>The Index no longer opens on a national shelf. It leads with <i>"For Jordan's paths"</i>: each path they're exploring maps to its published rankings, opened sorted by distance from their area, with a <i>"matches his diesel path"</i> tag so you know why you're looking at it.</p>
+    <p class="why"><b>Honest gaps stay honest:</b> a path with no published ranking says so plainly, instead of pretending.</p>
+  </div>
+
+  <div class="item">
+    <h2>Every school row shows its work</h2>
+    <p>Rows now carry the Foundry Score, net price, and median debt beside earnings and completion, plus a plain-language line: <i>"Score parts: earnings 52 · completion 87 · affordability 45 · credential quality 87."</i></p>
+    <p class="why"><b>Why it matters:</b> a counselor can defend a suggestion, and a family can see the money picture before falling for a brochure.</p>
+  </div>
+
+  <div class="item">
+    <h2>Every button goes somewhere real</h2>
+    <p>School cards open their ranking in the Index. Funding cards link to the real doors: apprenticeship.gov, Washington student aid, the FAFSA. And <i>Suggest to Jordan</i> starts a note for you, ready to send.</p>
+  </div>
+
+  <div class="mark"><span>Smaller things you'll feel</span></div>
+
+  <div class="item">
+    <h2>Trust, said where you're standing</h2>
+    <p>The banner now carries the whole promise: you see what was chosen for you, and updates reach you as a gentle summary, never a play-by-play. A quiet closing beat points a moved parent to the Foundry app itself <span class="chip spark">Coming to the App Store</span></p>
+  </div>
+
+  <div class="item">
+    <h2>Under the hood</h2>
+    <div class="fixes">
+      <ul>
+        <li><b>The send button works now.</b> Two stacked bugs meant notes had never once sent from a real browser. Both are fixed, and sending now fails honestly if it fails at all.</li>
+        <li><b>The demo enters the demo.</b> Picking a persona takes you straight into the preview instead of leaving you at the sign-in card. In real shared sessions, the demo controls stay out of sight.</li>
+        <li><b>Polish:</b> a real tab title, back-bars that stay put while you scroll, live trail dates, and a full pass on house language: skilled careers, said plainly.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="note">See it with sample data at <a href="https://foundryconnect.me">foundryconnect.me</a> · the demo simulates receipts and deliveries; real shared sessions use the real thing.</p>
+</div>
+</body>
+</html>
