@@ -166,7 +166,7 @@
     <h1>How to show the whole thing, end to end</h1>
     <p class="lede">The student app, the app&#8202;<span class="ar">&#8596;</span>&#8202;Connect handoff, and the Foundry Index &#8212; one live walkthrough for a prospect or partner. Keep this open on a second screen and follow the phases in order.</p>
     <div class="meta">
-      <span class="badge">App&nbsp;side &#183; <b>TestFlight Build 9</b></span>
+      <span class="badge">App&nbsp;side &#183; <b>TestFlight Build 10</b></span>
       <span class="badge">Connect &#183; <b>live at foundryconnect.me</b></span>
       <span class="badge">Bring &#183; <b>1 iPhone + 1 laptop</b></span>
     </div>
@@ -209,7 +209,7 @@
       <div><h2>Before the demo &#8212; turn on demo mode</h2><p class="phase-time">~5 min &#183; once</p></div>
     </div>
     <div class="phase-body">
-      <p>Two things in the room: <strong>a real iPhone with Build&nbsp;9</strong> (the simulator can&#8217;t do this &#8212; no real Sign in with Apple, no on-device voice) and <strong>a laptop</strong> for Connect.</p>
+      <p>Two things in the room: <strong>a real iPhone with Build&nbsp;10</strong> (the simulator can&#8217;t do this &#8212; no real Sign in with Apple, no on-device voice) and <strong>a laptop</strong> for Connect.</p>
       <p>On the phone, get to a signed-in account, then:</p>
       <ul class="steps">
         <li>Go to the <strong>Me</strong> tab.</li>
@@ -273,6 +273,8 @@
         <li>Toggle one on/off &#8212; <em>the student decides, per person, per aspect. A parent and a counselor can see completely different things.</em></li>
         <li>Leave one advisor (say the <strong>counselor</strong>) set with Portrait + Paths + messages <strong>on</strong> for the handoff next.</li>
       </ul>
+      <div class="note"><b>Adding advisors &#8212; so they show in Connect.</b> Connect switches advisors <em>by role</em> (<code>&amp;as=counselor</code> / <code>parent</code> / <code>coach</code>), so it reads the <strong>three seeded roles</strong>. For a normal demo you don&#8217;t add anyone &#8212; the three are already there. Only add a new advisor in <strong>Who can see me</strong> when a prospect specifically wants to see a <em>fourth</em> person; give them one of the three roles so Connect can select them with <code>&amp;as=</code>. A second advisor sharing a role won&#8217;t surface on its own (Connect picks the first match for that role). <b>Always add advisors on the phone (Who can see me), never in Connect</b> &#8212; Connect is a read-only window; the student owns the list.</div>
+      <div class="note"><b>When to &#8220;re-sync advisors.&#8221;</b> <span class="dev phone">&#128241; Phone</span> Me <span class="ar">&#8594;</span> <strong>&#8220;Demo mode on, re-sync advisors.&#8221;</strong> Tap it to reset the three advisors and their grants back to the demo matrix. Use it <strong>between demos</strong> (a previous prospect flipped grants and you want the clean starting picture), or if the grant switches drifted from what the script expects. It does <strong>not</strong> touch the Portrait, paths, or the trail &#8212; that&#8217;s <strong>&#8220;Start fresh&#8221;</strong> (Phase&nbsp;0). Re-sync = tidy the sharing matrix; Start fresh = wipe the whole profile.</div>
     </div>
   </section>
 
@@ -337,7 +339,7 @@
   </section>
 
   <footer>
-    Foundry &#183; Demo Runbook &#183; app = TestFlight Build&nbsp;9 &#183; Connect live at <a href="https://foundryconnect.me">foundryconnect.me</a>. Mirrors <code>DEMO-RUNBOOK.md</code> in the repo.
+    Foundry &#183; Demo Runbook &#183; app = TestFlight Build&nbsp;10 &#183; Connect live at <a href="https://foundryconnect.me">foundryconnect.me</a>. Mirrors <code>DEMO-RUNBOOK.md</code> in the repo.
   </footer>
 
 </div>
