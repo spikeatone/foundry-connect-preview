@@ -593,14 +593,17 @@
     });
   }
 
+  // In Spanish, ask the API for Spanish list titles so the picker matches the rest of the page.
+  var LANGQ = (window.IDX_LANG === 'es') ? '?lang=es' : '';
+
   function loadList(slug) {
-    fetch(API + '/v1/index/' + encodeURIComponent(slug))
+    fetch(API + '/v1/index/' + encodeURIComponent(slug) + LANGQ)
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (d) { if (!d || d.ok === false) throw new Error('not found'); renderList(d); })
       .catch(function () { showErr(TR('Couldn’t load this list’s weights right now. The pillar defaults above still apply.')); });
   }
 
-  fetch(API + '/v1/index')
+  fetch(API + '/v1/index' + LANGQ)
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (d) {
       var lists = (d && d.lists) || [];
