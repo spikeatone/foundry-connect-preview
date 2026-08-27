@@ -194,6 +194,162 @@
 </style>
 </head>
 <body>
+<!-- ============================================================= -->
+<!-- Methodology page i18n (EN / LatAm Spanish). Connect links here with ?lang=es when the viewer  -->
+<!-- chose Spanish. Two mechanisms, mirroring the main Connect page: TR() for JS-generated strings   -->
+<!-- (pillars, explorer labels, breadcrumb, errors), and a post-load text-node SWAP for the static   -->
+<!-- prose. Source names (College Scorecard, IPEDS, FAA…), "Foundry Score", CIP, and all numbers     -->
+<!-- stay English. Spanish follows the app's rules (tú, "Foundry" never translated).                 -->
+<!-- ============================================================= -->
+<script>
+(function () {
+  var _q = new URLSearchParams(location.search);
+  window.IDX_LANG = (_q.get('lang') === 'es') ? 'es' : 'en';
+  if (window.IDX_LANG === 'es') { try { document.documentElement.lang = 'es'; } catch (e) {} }
+
+  // Short JS-string map (dynamic content built in the page's own script).
+  window.IDX_TR = {
+    // pillars
+    '1 · Earnings & Return': '1 · Ingresos y retorno',
+    '2 · Completion & Momentum': '2 · Graduación e impulso',
+    '3 · Affordability': '3 · Costo accesible',
+    '4 · Credential Quality': '4 · Calidad de la credencial',
+    '5 · Student Experience': '5 · Experiencia del estudiante',
+    'Median earnings after completion; earnings vs. local cost of living; debt-to-earnings ratio.':
+      'Ingreso mediano tras graduarse; ingresos frente al costo de vida local; relación deuda-ingresos.',
+    'Completion rate; retention; time-to-credential.': 'Tasa de graduación; retención; tiempo hasta la credencial.',
+    'Net price; median debt at graduation; share who borrow.': 'Precio neto; deuda mediana al graduarse; proporción que pide préstamos.',
+    'Accreditation; licensure exam pass rate (aviation = the FAA mechanic exam; California cosmetology = the state board); industry-cert alignment; apprenticeship / placement.':
+      'Acreditación; tasa de aprobación del examen de licencia (aviación = el examen de mecánico de la FAA; cosmetología de California = la junta estatal); alineación con certificaciones de la industria; pasantía / colocación.',
+    'Verified student reviews, Bayesian-weighted so a school with 8 reviews can’t out-rank one with 800 on noise.':
+      'Reseñas verificadas de estudiantes, ponderadas de forma bayesiana para que una escuela con 8 reseñas no supere por ruido a una con 800.',
+    'College Scorecard (program-level, by CIP)': 'College Scorecard (a nivel de programa, por CIP)',
+    'IPEDS': 'IPEDS',
+    'IPEDS + College Scorecard': 'IPEDS + College Scorecard',
+    'Federal accreditor code · FAA AMTS · CA Board of Barbering & Cosmetology · DOL RAPIDS':
+      'Código federal de acreditador · FAA AMTS · Junta de Barbería y Cosmetología de CA · DOL RAPIDS',
+    'Foundry-collected (phased in — see roadmap)': 'Recopilado por Foundry (por fases — ver la hoja de ruta)',
+    'Source: ': 'Fuente: ',
+    // explorer weight labels
+    'Earnings & Return': 'Ingresos y retorno',
+    'Completion': 'Graduación',
+    'Affordability': 'Costo accesible',
+    'Credential Quality': 'Calidad de la credencial',
+    'Student Experience': 'Experiencia del estudiante',
+    // explorer meta + states
+    'Edition ': 'Edición ',
+    ' ranked': ' clasificadas',
+    ' emerging': ' emergentes',
+    'Scope: ': 'Alcance: ',
+    'Published ': 'Publicado ',
+    'Loading published lists…': 'Cargando listas publicadas…',
+    'No published lists yet': 'Todavía no hay listas publicadas',
+    'Couldn’t load the catalog': 'No se pudo cargar el catálogo',
+    'Couldn’t load this list’s weights right now. The pillar defaults above still apply.':
+      'No se pudieron cargar los pesos de esta lista ahora mismo. Los valores por defecto de los pilares de arriba siguen aplicando.',
+    'Couldn’t reach the Index right now. The pillar defaults above still describe how every list is built.':
+      'No se pudo conectar con el Índice ahora mismo. Los valores por defecto de los pilares de arriba siguen describiendo cómo se arma cada lista.',
+    // breadcrumb
+    'Foundry Connect': 'Foundry Connect',
+    'The Foundry Index': 'El Foundry Index',
+    'List': 'Lista',
+    'How we rank': 'Cómo clasificamos'
+  };
+  // TR() — used by the page's own script for dynamic strings.
+  window.TR = function (s) {
+    if (window.IDX_LANG !== 'es') return s;
+    return Object.prototype.hasOwnProperty.call(window.IDX_TR, s) ? window.IDX_TR[s] : s;
+  };
+
+  // Static-prose swap: whole trimmed text nodes → Spanish. Runs after DOM is ready. Idempotent.
+  window.IDX_PROSE = {
+    'Foundry Index — Methodology': 'Foundry Index — Metodología',
+    'How we rank institutions and what we won\'t fake': 'Cómo clasificamos las instituciones y lo que no vamos a inventar',
+    'our point of view': 'nuestro punto de vista',
+    'on where a teenager can train for a skilled career and get an honest return. It is not a government or accreditor standard. This page shows exactly how a rank is built, from which data, so you can judge it for yourself.':
+      'sobre dónde un adolescente puede formarse para una carrera técnica y obtener un retorno honesto. No es un estándar del gobierno ni de un acreditador. Esta página muestra exactamente cómo se arma una clasificación, con qué datos, para que lo juzgues por tu cuenta.',
+    'The five pillars': 'Los cinco pilares',
+    '0–100': '0–100',
+    'within a peer group': 'dentro de un grupo de pares',
+    'within one published list': 'dentro de una lista publicada',
+    'Weights differ by list — an earnings-focused list leans harder on Pillar 1. The exact profile for every published list is shown live below.':
+      'Los pesos cambian según la lista: una lista centrada en ingresos se apoya más en el Pilar 1. El perfil exacto de cada lista publicada se muestra en vivo abajo.',
+    'Weights, per published list': 'Pesos, por lista publicada',
+    'Weights are a product decision, revisited each annual edition — not a black box. Pick any published list to see its live weight profile, scope, and counts, pulled directly from the Index API.':
+      'Los pesos son una decisión de producto, revisada en cada edición anual, no una caja negra. Elige cualquier lista publicada para ver su perfil de pesos en vivo, su alcance y sus conteos, tomados directamente de la API del Índice.',
+    'Published list': 'Lista publicada',
+    'Pillar 5 (Student Experience) reads 0% at launch — see the roadmap below.':
+      'El Pilar 5 (Experiencia del estudiante) marca 0% al lanzamiento — ver la hoja de ruta abajo.',
+    'The honest-data rules': 'Las reglas de datos honestos',
+    'This is where we diverge from rankings that silently drop or backfill missing data.':
+      'Aquí es donde nos apartamos de las clasificaciones que descartan en silencio o rellenan los datos que faltan.',
+    'When a pillar\'s metric is unavailable for a school, the score is computed on the available pillars, re-normalized to 100%, and the profile lists exactly which pillars were and weren\'t measured. A school is ranked in the main tier only if it has outcome data (Pillar 1 or 2); otherwise it\'s Emerging.':
+      'Cuando la métrica de un pilar no está disponible para una escuela, el puntaje se calcula con los pilares disponibles, re-normalizados al 100%, y el perfil indica exactamente qué pilares se midieron y cuáles no. Una escuela se clasifica en el nivel principal solo si tiene datos de resultados (Pilar 1 o 2); de lo contrario, es Emergente.',
+    'Emerging schools — not a demotion': 'Escuelas emergentes — no es una degradación',
+    'not': 'no',
+    'The short version:': 'La versión corta:',
+    '"Emerging" means we don\'t have the outcome data to rank this school honestly — so we say that, plainly, instead of guessing. A ranked school and an Emerging school are answering two different questions:':
+      '«Emergente» significa que no tenemos los datos de resultados para clasificar esta escuela con honestidad, así que lo decimos con claridad en vez de adivinar. Una escuela clasificada y una escuela Emergente responden dos preguntas distintas:',
+    'how did its graduates do': 'cómo les fue a sus graduados',
+    'we can\'t tell you yet': 'todavía no te lo podemos decir',
+    'Every source, with its vintage': 'Cada fuente, con su antigüedad',
+    'College Scorecard — US Dept. of Education': 'College Scorecard — Depto. de Educación de EE. UU.',
+    'IPEDS — US Dept. of Education': 'IPEDS — Depto. de Educación de EE. UU.',
+    'Accreditation — federal College Scorecard accreditor code': 'Acreditación — código federal de acreditador de College Scorecard',
+    'FAA AMTS — aviation-maintenance licensure': 'FAA AMTS — licencia de mantenimiento de aviación',
+    'CA Board of Barbering & Cosmetology — cosmetology licensure': 'Junta de Barbería y Cosmetología de CA — licencia de cosmetología',
+    'DOL RAPIDS — apprenticeship / placement': 'DOL RAPIDS — pasantía / colocación',
+    'Pillar 5 launches at 0% — and is earned in': 'El Pilar 5 se lanza en 0% — y se gana con el tiempo',
+    'never a launch dependency': 'nunca una dependencia de lanzamiento',
+    'is': 'es',
+    'Corrections, and what a score is not': 'Correcciones, y lo que un puntaje no es',
+    'Every Foundry Score is explainable: it opens to a pillar-by-pillar breakdown and the underlying source figures, so a student learns to read outcomes critically — not just trust a number.':
+      'Cada Foundry Score es explicable: se abre a un desglose pilar por pilar y a las cifras de las fuentes, para que un estudiante aprenda a leer los resultados con criterio, no solo a confiar en un número.',
+    'Correction process': 'Proceso de corrección',
+    'A school can flag an error. We cite our sources and either fix it or explain why the figure stands. Corrections are part of the process, not an exception to it.':
+      'Una escuela puede señalar un error. Citamos nuestras fuentes y lo corregimos o explicamos por qué la cifra se mantiene. Las correcciones son parte del proceso, no una excepción.',
+    'Disclaimer': 'Aviso',
+    'On the FAA aviation figures:': 'Sobre las cifras de aviación de la FAA:',
+    'preliminary': 'preliminares',
+    'not for compliance use': 'no para uso de cumplimiento',
+    'Licensure coverage is partial — because the public data is.': 'La cobertura de licencias es parcial, porque los datos públicos lo son.',
+    'every licensure rate we show traces to an official government source': 'cada tasa de licencia que mostramos se remonta a una fuente oficial del gobierno',
+    'Ships as a Four-Pillar Index (v1).': 'Se lanza como un Índice de cuatro pilares (v1).',
+    'Phased in per school, gated by review volume.': 'Se incorpora por escuela, condicionado al volumen de reseñas.',
+    'Reviews come from real, verified students': 'Las reseñas vienen de estudiantes reales y verificados',
+    'The Foundry Index · edition 2027 · Postmark Digital. Each published list links back to this methodology.':
+      'El Foundry Index · edición 2027 · Postmark Digital. Cada lista publicada enlaza de vuelta a esta metodología.'
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.IDX_LANG !== 'es') return;
+    try {
+      var S = window.IDX_PROSE;
+      var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (n) {
+          var p = n.parentNode;
+          if (p && (p.tagName === 'SCRIPT' || p.tagName === 'STYLE')) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+      var n, hits = [];
+      while ((n = w.nextNode())) hits.push(n);
+      hits.forEach(function (node) {
+        var raw = node.nodeValue, key = raw.trim();
+        if (key && Object.prototype.hasOwnProperty.call(S, key)) {
+          node.nodeValue = raw.replace(key, S[key]);
+        }
+      });
+      // Elements with inline markup (mid-sentence <strong>/<em>) split into fragments the whole-node
+      // swap can't reach, so they carry a full Spanish innerHTML in data-es and swap wholesale.
+      var els = document.querySelectorAll('[data-es]');
+      for (var i = 0; i < els.length; i++) {
+        var v = els[i].getAttribute('data-es');
+        if (v != null) els[i].innerHTML = v;
+      }
+    } catch (e) {}
+  });
+})();
+</script>
 <div class="wrap">
 
   <!-- Persistent breadcrumb back into Connect (matches Connect's own breadcrumb). Links are built at
@@ -204,14 +360,14 @@
   <header class="masthead">
     <p class="kicker">The Foundry Index</p>
     <h1>How we rank institutions and what we won't fake</h1>
-    <p class="lede">The Foundry Index is <strong>our point of view</strong> on where a teenager can train for a skilled career and get an honest return. It is not a government or accreditor standard. This page shows exactly how a rank is built, from which data, so you can judge it for yourself.</p>
+    <p class="lede" data-es="El Foundry Index es <strong>nuestro punto de vista</strong> sobre dónde un adolescente puede formarse para una carrera técnica y obtener un retorno honesto. No es un estándar del gobierno ni de un acreditador. Esta página muestra exactamente cómo se arma una clasificación, con qué datos, para que lo juzgues por tu cuenta.">The Foundry Index is <strong>our point of view</strong> on where a teenager can train for a skilled career and get an honest return. It is not a government or accreditor standard. This page shows exactly how a rank is built, from which data, so you can judge it for yourself.</p>
   </header>
 
   <hr class="rule">
 
   <section>
     <h2>The five pillars</h2>
-    <p>Every school or program is scored <strong>0–100</strong> — the Foundry Score. Each metric is normalized <em>within a peer group</em> (a welding program is compared to welding programs, not to a nursing school or a university), then combined using published, per-list weights. A rank is just the order of those scores <em>within one published list</em>.</p>
+    <p data-es="Cada escuela o programa se puntúa de <strong>0–100</strong>: el Foundry Score. Cada métrica se normaliza <em>dentro de un grupo de pares</em> (un programa de soldadura se compara con programas de soldadura, no con una escuela de enfermería ni una universidad), y luego se combina usando pesos publicados por lista. Una clasificación es solo el orden de esos puntajes <em>dentro de una lista publicada</em>.">Every school or program is scored <strong>0–100</strong> — the Foundry Score. Each metric is normalized <em>within a peer group</em> (a welding program is compared to welding programs, not to a nursing school or a university), then combined using published, per-list weights. A rank is just the order of those scores <em>within one published list</em>.</p>
     <div class="pillars" id="pillars"></div>
     <p class="explorer-note" style="margin-top:14px">Weights differ by list — an earnings-focused list leans harder on Pillar 1. The exact profile for every published list is shown live below.</p>
   </section>
@@ -233,26 +389,26 @@
     <h2>The honest-data rules</h2>
     <p>This is where we diverge from rankings that silently drop or backfill missing data.</p>
     <ul class="rules">
-      <li><strong>Missing outcomes become "Emerging," never a fake rank.</strong> Federal data suppresses any figure covering fewer than 30 students. Small certificate programs — often exactly our audience's programs — may have no published earnings. Those schools are listed and profiled with an <strong>"Emerging / Insufficient Outcome Data"</strong> badge in a separate tier, never interpolated above measured programs.</li>
-      <li><strong>We never backfill a program's earnings with whole-school numbers</strong> and present it as the program's result. If we only have institution-level data, we say so.</li>
-      <li><strong>Earnings are shown as ranges.</strong> A single point estimate implies a precision the data doesn't have.</li>
-      <li><strong>Small samples are disclosed, not penalized.</strong> A 22-graduate program isn't pushed down the rank for its size; it carries a confidence note.</li>
-      <li><strong>Data vintage is always shown.</strong> "Earnings reflect the 2023–24 cohort" — outcomes are historical, not a promise.</li>
+      <li data-es="<strong>Los resultados que faltan pasan a «Emergente», nunca a una clasificación falsa.</strong> Los datos federales suprimen cualquier cifra que cubra a menos de 30 estudiantes. Los programas pequeños de certificado —a menudo justo los de nuestro público— pueden no tener ingresos publicados. Esas escuelas se listan y perfilan con una insignia de <strong>«Emergente / Datos de resultados insuficientes»</strong> en un nivel aparte, nunca interpoladas por encima de los programas medidos."><strong>Missing outcomes become "Emerging," never a fake rank.</strong> Federal data suppresses any figure covering fewer than 30 students. Small certificate programs — often exactly our audience's programs — may have no published earnings. Those schools are listed and profiled with an <strong>"Emerging / Insufficient Outcome Data"</strong> badge in a separate tier, never interpolated above measured programs.</li>
+      <li data-es="<strong>Nunca rellenamos los ingresos de un programa con las cifras de toda la escuela</strong> y las presentamos como el resultado del programa. Si solo tenemos datos a nivel de institución, lo decimos."><strong>We never backfill a program's earnings with whole-school numbers</strong> and present it as the program's result. If we only have institution-level data, we say so.</li>
+      <li data-es="<strong>Los ingresos se muestran como rangos.</strong> Una sola estimación puntual da a entender una precisión que el dato no tiene."><strong>Earnings are shown as ranges.</strong> A single point estimate implies a precision the data doesn't have.</li>
+      <li data-es="<strong>Las muestras pequeñas se revelan, no se penalizan.</strong> Un programa de 22 graduados no baja en la clasificación por su tamaño; lleva una nota de confianza."><strong>Small samples are disclosed, not penalized.</strong> A 22-graduate program isn't pushed down the rank for its size; it carries a confidence note.</li>
+      <li data-es="<strong>La antigüedad de los datos siempre se muestra.</strong> «Los ingresos reflejan la generación 2023–24»: los resultados son históricos, no una promesa."><strong>Data vintage is always shown.</strong> "Earnings reflect the 2023–24 cohort" — outcomes are historical, not a promise.</li>
     </ul>
-    <p>When a pillar's metric is unavailable for a school, the score is computed on the <strong>available pillars, re-normalized to 100%</strong>, and the profile lists exactly which pillars were and weren't measured. A school is ranked in the main tier only if it has outcome data (Pillar 1 or 2); otherwise it's Emerging.</p>
+    <p data-es="Cuando la métrica de un pilar no está disponible para una escuela, el puntaje se calcula con los <strong>pilares disponibles, re-normalizados al 100%</strong>, y el perfil indica exactamente qué pilares se midieron y cuáles no. Una escuela se clasifica en el nivel principal solo si tiene datos de resultados (Pilar 1 o 2); de lo contrario, es Emergente.">When a pillar's metric is unavailable for a school, the score is computed on the <strong>available pillars, re-normalized to 100%</strong>, and the profile lists exactly which pillars were and weren't measured. A school is ranked in the main tier only if it has outcome data (Pillar 1 or 2); otherwise it's Emerging.</p>
   </section>
 
   <section>
     <h2>Emerging schools — not a demotion</h2>
-    <p>An <strong>Emerging</strong> school is one we couldn't score on outcomes yet — <em>not</em> a school we scored and ranked low. It's the honest label for a data gap, and it matters most for exactly the programs our students care about: small, new, or specialized ones the federal data hasn't caught up to.</p>
+    <p data-es="Una escuela <strong>Emergente</strong> es una que todavía no pudimos puntuar por resultados —<em>no</em> una escuela que puntuamos y clasificamos bajo. Es la etiqueta honesta para un vacío de datos, y importa más justo para los programas que le interesan a nuestros estudiantes: los pequeños, nuevos o especializados a los que los datos federales no han llegado.">An <strong>Emerging</strong> school is one we couldn't score on outcomes yet — <em>not</em> a school we scored and ranked low. It's the honest label for a data gap, and it matters most for exactly the programs our students care about: small, new, or specialized ones the federal data hasn't caught up to.</p>
     <ul class="rules">
-      <li><strong>Why a school lands here.</strong> To earn a Foundry Score, a school needs published outcome data — Pillar 1 (earnings) or Pillar 2 (completion/quality). Federal data suppresses any figure covering fewer than 30 students, so a small certificate program often has <em>no</em> published earnings to score. When neither outcome pillar has data, the school is Emerging instead of ranked.</li>
-      <li><strong>It's a gap in public data, not a verdict on the school.</strong> A brand-new welding program with 18 graduates can be excellent and still be Emerging — the government simply hasn't published its numbers. Emerging says "we won't pretend to know," never "this school is worse."</li>
-      <li><strong>We never fake a rank to fill the gap.</strong> Emerging schools are never interpolated, estimated, or slotted above measured programs. That's the whole point: a made-up rank would be more harmful than an honest "not enough data yet."</li>
-      <li><strong>How it's shown.</strong> Emerging schools are still listed and profiled — with an <strong>"Emerging / Insufficient Outcome Data"</strong> badge, in their own tier below the ranked list. The reader sees the school exists, sees why it isn't ranked, and can still explore it.</li>
-      <li><strong>Schools move out of Emerging as data arrives.</strong> When a program graduates enough students for federal outcomes to publish — or an official licensure source covers it — it earns a Foundry Score in the next edition. Emerging is a starting point, not a ceiling.</li>
+      <li data-es="<strong>Por qué una escuela cae aquí.</strong> Para ganar un Foundry Score, una escuela necesita datos de resultados publicados: Pilar 1 (ingresos) o Pilar 2 (graduación/calidad). Los datos federales suprimen cualquier cifra que cubra a menos de 30 estudiantes, así que un programa pequeño de certificado a menudo <em>no</em> tiene ingresos publicados que puntuar. Cuando ninguno de los dos pilares de resultados tiene datos, la escuela es Emergente en vez de clasificada."><strong>Why a school lands here.</strong> To earn a Foundry Score, a school needs published outcome data — Pillar 1 (earnings) or Pillar 2 (completion/quality). Federal data suppresses any figure covering fewer than 30 students, so a small certificate program often has <em>no</em> published earnings to score. When neither outcome pillar has data, the school is Emerging instead of ranked.</li>
+      <li data-es="<strong>Es un vacío en los datos públicos, no un veredicto sobre la escuela.</strong> Un programa de soldadura nuevecito con 18 graduados puede ser excelente y aun así ser Emergente: el gobierno simplemente no ha publicado sus cifras. Emergente dice «no vamos a fingir que lo sabemos», nunca «esta escuela es peor»."><strong>It's a gap in public data, not a verdict on the school.</strong> A brand-new welding program with 18 graduates can be excellent and still be Emerging — the government simply hasn't published its numbers. Emerging says "we won't pretend to know," never "this school is worse."</li>
+      <li data-es="<strong>Nunca inventamos una clasificación para llenar el vacío.</strong> Las escuelas Emergentes nunca se interpolan, estiman ni colocan por encima de los programas medidos. De eso se trata: una clasificación inventada sería más dañina que un honesto «todavía no hay suficientes datos»."><strong>We never fake a rank to fill the gap.</strong> Emerging schools are never interpolated, estimated, or slotted above measured programs. That's the whole point: a made-up rank would be more harmful than an honest "not enough data yet."</li>
+      <li data-es="<strong>Cómo se muestra.</strong> Las escuelas Emergentes se listan y perfilan igual, con una insignia de <strong>«Emergente / Datos de resultados insuficientes»</strong>, en su propio nivel debajo de la lista clasificada. El lector ve que la escuela existe, ve por qué no está clasificada, y aun así puede explorarla."><strong>How it's shown.</strong> Emerging schools are still listed and profiled — with an <strong>"Emerging / Insufficient Outcome Data"</strong> badge, in their own tier below the ranked list. The reader sees the school exists, sees why it isn't ranked, and can still explore it.</li>
+      <li data-es="<strong>Las escuelas salen de Emergente a medida que llegan los datos.</strong> Cuando un programa gradúa a suficientes estudiantes para que se publiquen resultados federales —o una fuente oficial de licencias lo cubre— gana un Foundry Score en la siguiente edición. Emergente es un punto de partida, no un techo."><strong>Schools move out of Emerging as data arrives.</strong> When a program graduates enough students for federal outcomes to publish — or an official licensure source covers it — it earns a Foundry Score in the next edition. Emerging is a starting point, not a ceiling.</li>
     </ul>
-    <div class="callout">
+    <div class="callout" data-es="<b>La versión corta:</b> «Emergente» significa que no tenemos los datos de resultados para clasificar esta escuela con honestidad, así que lo decimos con claridad en vez de adivinar. Una escuela clasificada y una escuela Emergente responden dos preguntas distintas: <em>cómo les fue a sus graduados</em> frente a <em>todavía no te lo podemos decir</em>.">
       <b>The short version:</b> "Emerging" means we don't have the outcome data to rank this school honestly — so we say that, plainly, instead of guessing. A ranked school and an Emerging school are answering two different questions: <em>how did its graduates do</em> versus <em>we can't tell you yet</em>.
     </div>
   </section>
@@ -262,52 +418,52 @@
     <div class="src">
       <div class="src-item">
         <div class="src-name">College Scorecard — US Dept. of Education</div>
-        <div class="src-what">Program-level earnings and debt, keyed by 4-digit CIP code + credential level, plus the school's accreditor code. This is what lets us rank a <em>welding program</em>, not just a whole school. Pooled across multiple years to reduce noise.</div>
-        <div class="src-vintage">Vintage: most recent available cohort; shown per list edition (2027).</div>
+        <div class="src-what" data-es="Ingresos y deuda a nivel de programa, indexados por el código CIP de 4 dígitos + nivel de credencial, más el código de acreditador de la escuela. Esto es lo que nos permite clasificar un <em>programa de soldadura</em>, no solo una escuela entera. Combinado a lo largo de varios años para reducir el ruido.">Program-level earnings and debt, keyed by 4-digit CIP code + credential level, plus the school's accreditor code. This is what lets us rank a <em>welding program</em>, not just a whole school. Pooled across multiple years to reduce noise.</div>
+        <div class="src-vintage" data-es="Antigüedad: la generación más reciente disponible; se muestra por edición de lista (2027).">Vintage: most recent available cohort; shown per list edition (2027).</div>
       </div>
       <div class="src-item">
         <div class="src-name">IPEDS — US Dept. of Education</div>
-        <div class="src-what">Institution characteristics, net price, completion, retention, and program offerings. Every school taking federal aid reports.</div>
-        <div class="src-vintage">Vintage: most recent published reporting year.</div>
+        <div class="src-what" data-es="Características de la institución, precio neto, graduación, retención y oferta de programas. Toda escuela que recibe ayuda federal reporta.">Institution characteristics, net price, completion, retention, and program offerings. Every school taking federal aid reports.</div>
+        <div class="src-vintage" data-es="Antigüedad: el año de reporte publicado más reciente.">Vintage: most recent published reporting year.</div>
       </div>
       <div class="src-item">
         <div class="src-name">Accreditation — federal College Scorecard accreditor code</div>
-        <div class="src-what">Across all published lists, the school's accreditor is taken from the federal <code>accreditor_code</code> field (e.g. ACCSC, ABHES, NACCAS, regional). A clean accredited/not signal plus accreditor identity.</div>
-        <div class="src-vintage">Vintage: current federal file.</div>
+        <div class="src-what" data-es="En todas las listas publicadas, el acreditador de la escuela se toma del campo federal <code>accreditor_code</code> (p. ej. ACCSC, ABHES, NACCAS, regional). Una señal limpia de acreditada/no acreditada más la identidad del acreditador.">Across all published lists, the school's accreditor is taken from the federal <code>accreditor_code</code> field (e.g. ACCSC, ABHES, NACCAS, regional). A clean accredited/not signal plus accreditor identity.</div>
+        <div class="src-vintage" data-es="Antigüedad: el archivo federal actual.">Vintage: current federal file.</div>
       </div>
       <div class="src-item">
         <div class="src-name">FAA AMTS — aviation-maintenance licensure</div>
-        <div class="src-what">For aviation lists, the licensure pass rate is the FAA's Aviation Maintenance Technician School Minimum Passage Rate report (14 CFR §147.25), covering 8/2023–12/2024: passing students ÷ (passing + failing) on FAA mechanic tests within 60 days of graduation, matched to schools by FSDO region.</div>
-        <div class="src-vintage">Vintage: FAA report through Q4 2024. <strong>Officially PRELIMINARY</strong> — see the caveat below.</div>
+        <div class="src-what" data-es="Para las listas de aviación, la tasa de aprobación de licencia es el informe de Tasa Mínima de Aprobación de Escuelas de Técnicos de Mantenimiento de Aviación de la FAA (14 CFR §147.25), que cubre 8/2023–12/2024: estudiantes que aprueban ÷ (aprueban + reprueban) en los exámenes de mecánico de la FAA dentro de los 60 días de graduarse, emparejados con las escuelas por región FSDO.">For aviation lists, the licensure pass rate is the FAA's Aviation Maintenance Technician School Minimum Passage Rate report (14 CFR §147.25), covering 8/2023–12/2024: passing students ÷ (passing + failing) on FAA mechanic tests within 60 days of graduation, matched to schools by FSDO region.</div>
+        <div class="src-vintage" data-es="Antigüedad: informe de la FAA hasta el 4.º trimestre de 2024. <strong>Oficialmente PRELIMINAR</strong>: ver la advertencia abajo.">Vintage: FAA report through Q4 2024. <strong>Officially PRELIMINARY</strong> — see the caveat below.</div>
       </div>
       <div class="src-item">
         <div class="src-name">CA Board of Barbering &amp; Cosmetology — cosmetology licensure</div>
-        <div class="src-what">For California cosmetology schools, the pass rate is the Board's "Examination Results by School" report, aggregated across license types (cosmetologist, barber, esthetician, manicurist) and weighted by test-takers. Only schools with at least 30 test-takers are included — smaller cohorts are omitted, never guessed.</div>
-        <div class="src-vintage">Vintage: Q4 2024. <strong>California only</strong> today — see the coverage note below.</div>
+        <div class="src-what" data-es="Para las escuelas de cosmetología de California, la tasa de aprobación es el informe «Resultados de examen por escuela» de la Junta, agregado entre tipos de licencia (cosmetólogo, barbero, esteticista, manicurista) y ponderado por examinados. Solo se incluyen las escuelas con al menos 30 examinados: las generaciones más pequeñas se omiten, nunca se adivinan.">For California cosmetology schools, the pass rate is the Board's "Examination Results by School" report, aggregated across license types (cosmetologist, barber, esthetician, manicurist) and weighted by test-takers. Only schools with at least 30 test-takers are included — smaller cohorts are omitted, never guessed.</div>
+        <div class="src-vintage" data-es="Antigüedad: 4.º trimestre de 2024. <strong>Solo California</strong> por ahora: ver la nota de cobertura abajo.">Vintage: Q4 2024. <strong>California only</strong> today — see the coverage note below.</div>
       </div>
       <div class="src-item">
         <div class="src-name">DOL RAPIDS — apprenticeship / placement</div>
-        <div class="src-what">Program- and sponsor-level apprenticeship completion data (PII removed), used for apprenticeship-route programs and as a benchmark.</div>
-        <div class="src-vintage">Vintage: latest available extract.</div>
+        <div class="src-what" data-es="Datos de finalización de pasantías a nivel de programa y de patrocinador (sin datos personales), usados para los programas por la ruta de pasantía y como referencia.">Program- and sponsor-level apprenticeship completion data (PII removed), used for apprenticeship-route programs and as a benchmark.</div>
+        <div class="src-vintage" data-es="Antigüedad: el extracto disponible más reciente.">Vintage: latest available extract.</div>
       </div>
     </div>
 
-    <div class="callout">
+    <div class="callout" data-es="<b>Sobre las cifras de aviación de la FAA:</b> los datos de tasa de aprobación de la FAA son oficialmente <b>preliminares</b> y <b>no para uso de cumplimiento</b> hasta enero de 2027. Los mostramos porque son la mejor señal de licencia a nivel de escuela que existe para el mantenimiento de aviación, y los etiquetamos como preliminares dondequiera que aparezcan.">
       <b>On the FAA aviation figures:</b> the FAA passage-rate data is officially <b>preliminary</b> and is <b>not for compliance use</b> until January 2027. We show it because it is the best school-level licensure signal that exists for aviation maintenance, and we label it as preliminary wherever it appears.
     </div>
 
-    <div class="callout">
+    <div class="callout" data-es="<b>La cobertura de licencias es parcial, porque los datos públicos lo son.</b> Una tasa de aprobación de examen de licencia existe aquí solo donde una fuente oficial la publica <em>escuela por escuela</em>: a nivel nacional para aviación (la FAA), y para cosmetología en California (la junta estatal). Muchos estados publican solo agregados estatales, no resultados por escuela, así que una tasa por escuela simplemente no existe para citarlos: esta cobertura está limitada por lo que las fuentes publican, no por esfuerzo. Las escuelas sin fuente de licencia se puntúan con los pilares que <em>sí</em> tienen —el Pilar 4 se re-normaliza sobre las señales disponibles en vez de penalizar a una escuela por un vacío en los datos públicos. Agregamos un estado o una vocación cada vez que un organismo oficial publica resultados por escuela, y preferimos dejar una métrica en blanco antes que fabricarla. Por diseño, <b>cada tasa de licencia que mostramos se remonta a una fuente oficial del gobierno</b> —la FAA y la junta estatal de California— nunca a una estimación de terceros ni a un proveedor de exámenes.">
       <b>Licensure coverage is partial — because the public data is.</b> A licensure exam pass rate exists here only where an official source publishes it <em>school-by-school</em>: nationally for aviation (the FAA), and for cosmetology in California (the state board). Many states publish only statewide aggregates, not per-school results, so a by-school rate simply doesn't exist to cite for them — this coverage is limited by what the sources release, not by effort. Schools without a licensure source are scored on the pillars they <em>do</em> have — Pillar 4 re-normalizes over the available signals rather than penalizing a school for a gap in public data. We add a state or vocation whenever an official body publishes by-school results, and we'd rather leave a metric blank than fabricate one. By design, <b>every licensure rate we show traces to an official government source</b> — the FAA and the California state board — never a third-party estimate or an exam vendor.
     </div>
   </section>
 
   <section>
     <h2>Pillar 5 launches at 0% — and is earned in</h2>
-    <p>Pillar 5 (Student Experience) is a flywheel, not a cold input: it only carries signal <em>after</em> Foundry has users, but the Index has to be credible before that. So it is <strong>never a launch dependency</strong>, and its weight is disclosed here as a versioned roadmap from day one.</p>
+    <p data-es="El Pilar 5 (Experiencia del estudiante) es un motor de arranque, no un dato frío: solo lleva señal <em>después</em> de que Foundry tiene usuarios, pero el Índice tiene que ser creíble antes de eso. Por eso <strong>nunca es una dependencia de lanzamiento</strong>, y su peso se revela aquí como una hoja de ruta versionada desde el primer día.">Pillar 5 (Student Experience) is a flywheel, not a cold input: it only carries signal <em>after</em> Foundry has users, but the Index has to be credible before that. So it is <strong>never a launch dependency</strong>, and its weight is disclosed here as a versioned roadmap from day one.</p>
     <ul class="rules">
-      <li><strong>Ships as a Four-Pillar Index (v1).</strong> At launch Pillar 5's weight is <strong>0%</strong>; Pillars 1–4 re-normalize to 100%. Student Experience will be introduced in a future edition as verified review volume grows — the roadmap <em>is</em> the transparency, not a gap we hide.</li>
-      <li><strong>Phased in per school, gated by review volume.</strong> A school with 0–7 reviews is pulled fully to its peer-group mean — the pillar neither helps nor hurts it. Only with hundreds of verified reviews does Pillar 5 move that school's score. The global weight rises <strong>0% → 5% → 10%</strong> across annual editions as aggregate verified-review volume crosses stated thresholds. Thin data never corrupts a ranking.</li>
-      <li><strong>Reviews come from real, verified students</strong> — people who actually attended or seriously considered a program, gathered through Foundry's mentor loop and its Connect counselors. Quality over quantity, honestly labeled: 30 verified reviews beat 3,000 anonymous ones. Pillar 5 is small by design (10% cap) and explicitly subjective.</li>
+      <li data-es="<strong>Se lanza como un Índice de cuatro pilares (v1).</strong> Al lanzamiento el peso del Pilar 5 es <strong>0%</strong>; los Pilares 1–4 se re-normalizan al 100%. La Experiencia del estudiante se introducirá en una edición futura a medida que crezca el volumen de reseñas verificadas: la hoja de ruta <em>es</em> la transparencia, no un vacío que escondemos."><strong>Ships as a Four-Pillar Index (v1).</strong> At launch Pillar 5's weight is <strong>0%</strong>; Pillars 1–4 re-normalize to 100%. Student Experience will be introduced in a future edition as verified review volume grows — the roadmap <em>is</em> the transparency, not a gap we hide.</li>
+      <li data-es="<strong>Se incorpora por escuela, condicionado al volumen de reseñas.</strong> Una escuela con 0–7 reseñas se lleva por completo a la media de su grupo de pares: el pilar ni la ayuda ni la perjudica. Solo con cientos de reseñas verificadas el Pilar 5 mueve el puntaje de esa escuela. El peso global sube <strong>0% → 5% → 10%</strong> a lo largo de las ediciones anuales a medida que el volumen agregado de reseñas verificadas cruza los umbrales establecidos. Los datos escasos nunca corrompen una clasificación."><strong>Phased in per school, gated by review volume.</strong> A school with 0–7 reviews is pulled fully to its peer-group mean — the pillar neither helps nor hurts it. Only with hundreds of verified reviews does Pillar 5 move that school's score. The global weight rises <strong>0% → 5% → 10%</strong> across annual editions as aggregate verified-review volume crosses stated thresholds. Thin data never corrupts a ranking.</li>
+      <li data-es="<strong>Las reseñas vienen de estudiantes reales y verificados</strong> —personas que de verdad asistieron o consideraron en serio un programa, reunidas a través del circuito de mentoría de Foundry y sus consejeros de Connect. Calidad sobre cantidad, etiquetada con honestidad: 30 reseñas verificadas valen más que 3.000 anónimas. El Pilar 5 es pequeño por diseño (tope del 10%) y explícitamente subjetivo."><strong>Reviews come from real, verified students</strong> — people who actually attended or seriously considered a program, gathered through Foundry's mentor loop and its Connect counselors. Quality over quantity, honestly labeled: 30 verified reviews beat 3,000 anonymous ones. Pillar 5 is small by design (10% cap) and explicitly subjective.</li>
     </ul>
   </section>
 
@@ -317,7 +473,7 @@
     <h3>Correction process</h3>
     <p>A school can flag an error. We cite our sources and either fix it or explain why the figure stands. Corrections are part of the process, not an exception to it.</p>
     <h3>Disclaimer</h3>
-    <p class="disclaimer">Scores reflect historical, publicly-reported outcomes and are <strong>not a promise of any individual's result</strong>. The Foundry Index is Foundry's point of view — <strong>not</strong> a government, accreditor, or official standard, and it makes no claim of official status.</p>
+    <p class="disclaimer" data-es="Los puntajes reflejan resultados históricos reportados públicamente y <strong>no son una promesa del resultado de ninguna persona</strong>. El Foundry Index es el punto de vista de Foundry —<strong>no</strong> un estándar del gobierno, de un acreditador ni oficial, y no reclama estatus oficial alguno.">Scores reflect historical, publicly-reported outcomes and are <strong>not a promise of any individual's result</strong>. The Foundry Index is Foundry's point of view — <strong>not</strong> a government, accreditor, or official standard, and it makes no claim of official status.</p>
   </section>
 
   <footer>
@@ -357,14 +513,14 @@
     html += '<a href="' + connectUrl() + '"><span class="chev">‹</span> Foundry Connect</a>';
     // 2) The Foundry Index (catalog)
     html += '<span class="sep">/</span>';
-    html += '<a href="' + connectUrl(['view=index']) + '">The Foundry Index</a>';
+    html += '<a href="' + connectUrl(['view=index']) + '">' + TR('The Foundry Index') + '</a>';
     // 3) the specific list, when we came from one
     if (back === 'indexList' && slug) {
       html += '<span class="sep">/</span>';
-      html += '<a href="' + connectUrl(['view=indexList', 'slug=' + encodeURIComponent(slug)]) + '">' + (listTitle ? esc(listTitle) : 'List') + '</a>';
+      html += '<a href="' + connectUrl(['view=indexList', 'slug=' + encodeURIComponent(slug)]) + '">' + (listTitle ? esc(listTitle) : TR('List')) + '</a>';
     }
     // 4) here (non-link)
-    html += '<span class="sep">/</span><span class="here">How we rank</span>';
+    html += '<span class="sep">/</span><span class="here">' + TR('How we rank') + '</span>';
     nav.innerHTML = html;
   })();
 
@@ -380,10 +536,10 @@
   PILLARS.forEach(function (p) {
     var el = document.createElement('div'); el.className = 'pillar';
     el.innerHTML =
-      '<div class="pillar-head"><span class="pillar-name">' + p.n + '</span>' +
+      '<div class="pillar-head"><span class="pillar-name">' + TR(p.n) + '</span>' +
       '<span class="pillar-weight">' + p.w + '</span></div>' +
-      '<div class="pillar-metrics">' + p.m + '</div>' +
-      '<div class="pillar-source">Source: ' + p.s + '</div>';
+      '<div class="pillar-metrics">' + TR(p.m) + '</div>' +
+      '<div class="pillar-source">' + TR('Source: ') + TR(p.s) + '</div>';
     pc.appendChild(el);
   });
 
@@ -415,11 +571,11 @@
     if (scope.cip4 && scope.cip4.length) scopeBits.push('CIP ' + scope.cip4.join(', '));
     if (scope.state) scopeBits.push(String(scope.state).toUpperCase());
     meta.innerHTML =
-      '<span>Edition <b>' + (d.edition || '—') + '</b></span>' +
-      '<span><b>' + (d.rankedCount != null ? d.rankedCount : '—') + '</b> ranked</span>' +
-      '<span><b>' + (d.emergingCount != null ? d.emergingCount : '—') + '</b> emerging</span>' +
-      (scopeBits.length ? '<span>Scope: <b>' + scopeBits.join(' · ') + '</b></span>' : '') +
-      (d.publishedAt ? '<span>Published <b>' + fmtDate(d.publishedAt) + '</b></span>' : '');
+      '<span>' + TR('Edition ') + '<b>' + (d.edition || '—') + '</b></span>' +
+      '<span><b>' + (d.rankedCount != null ? d.rankedCount : '—') + '</b>' + TR(' ranked') + '</span>' +
+      '<span><b>' + (d.emergingCount != null ? d.emergingCount : '—') + '</b>' + TR(' emerging') + '</span>' +
+      (scopeBits.length ? '<span>' + TR('Scope: ') + '<b>' + scopeBits.join(' · ') + '</b></span>' : '') +
+      (d.publishedAt ? '<span>' + TR('Published ') + '<b>' + fmtDate(d.publishedAt) + '</b></span>' : '');
 
     weights.innerHTML = '';
     WEIGHT_ORDER.forEach(function (k) {
@@ -427,7 +583,7 @@
       var pct = Math.round(val * 100);
       var row = document.createElement('div'); row.className = 'wbar-row';
       row.innerHTML =
-        '<div class="wbar-label">' + WEIGHT_LABELS[k] + '</div>' +
+        '<div class="wbar-label">' + TR(WEIGHT_LABELS[k]) + '</div>' +
         '<div class="wbar-track"><div class="wbar-fill"></div></div>' +
         '<div class="wbar-pct">' + pct + '%</div>';
       weights.appendChild(row);
@@ -441,14 +597,14 @@
     fetch(API + '/v1/index/' + encodeURIComponent(slug))
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (d) { if (!d || d.ok === false) throw new Error('not found'); renderList(d); })
-      .catch(function () { showErr('Couldn’t load this list’s weights right now. The pillar defaults above still apply.'); });
+      .catch(function () { showErr(TR('Couldn’t load this list’s weights right now. The pillar defaults above still apply.')); });
   }
 
   fetch(API + '/v1/index')
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (d) {
       var lists = (d && d.lists) || [];
-      if (!lists.length) { pick.innerHTML = '<option>No published lists yet</option>'; return; }
+      if (!lists.length) { pick.innerHTML = '<option>' + TR('No published lists yet') + '</option>'; return; }
       pick.innerHTML = '';
       lists.forEach(function (l) {
         var o = document.createElement('option');
@@ -459,8 +615,8 @@
       loadList(lists[0].slug);
     })
     .catch(function () {
-      pick.innerHTML = '<option>Couldn’t load the catalog</option>';
-      showErr('Couldn’t reach the Index right now. The pillar defaults above still describe how every list is built.');
+      pick.innerHTML = '<option>' + TR('Couldn’t load the catalog') + '</option>';
+      showErr(TR('Couldn’t reach the Index right now. The pillar defaults above still describe how every list is built.'));
     });
 })();
 </script>
