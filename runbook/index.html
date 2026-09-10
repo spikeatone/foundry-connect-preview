@@ -166,7 +166,7 @@
     <h1>How to show the whole thing, end to end</h1>
     <p class="lede">The student app, the app&#8202;<span class="ar">&#8596;</span>&#8202;Connect handoff, and the Foundry Index &#8212; one live walkthrough for a prospect or partner. Keep this open on a second screen and follow the phases in order.</p>
     <div class="meta">
-      <span class="badge">App&nbsp;side &#183; <b>TestFlight Build 19</b></span>
+      <span class="badge">App&nbsp;side &#183; <b>TestFlight Build 21</b></span>
       <span class="badge">Connect &#183; <b>live at foundryconnect.me</b></span>
       <span class="badge">Bring &#183; <b>1 iPhone + 1 laptop</b></span>
     </div>
@@ -209,7 +209,7 @@
       <div><h2>Before the demo &#8212; turn on demo mode</h2><p class="phase-time">~5 min &#183; once</p></div>
     </div>
     <div class="phase-body">
-      <p>Two things in the room: <strong>a real iPhone with Build&nbsp;19</strong> (the simulator can&#8217;t do this &#8212; no real Sign in with Apple, no on-device voice) and <strong>a laptop</strong> for Connect.</p>
+      <p>Two things in the room: <strong>a real iPhone with Build&nbsp;21</strong> (the simulator can&#8217;t do this &#8212; no real Sign in with Apple, no on-device voice) and <strong>a laptop</strong> for Connect.</p>
       <p>On the phone, get to a signed-in account, then:</p>
       <ul class="steps">
         <li>Go to the <strong>Me</strong> tab.</li>
@@ -217,6 +217,15 @@
         <li>Tap <strong>Enable demo mode</strong>. It seeds <strong>three Connect advisors</strong> (counselor / parent / coach) and mints the <strong>demo token</strong> Connect reads. The button then reads <em>&#8220;Demo mode on, re-sync advisors&#8221;</em> &#8212; tap it anytime to reset advisors + grants between demos.</li>
         <li><strong>&#8220;Start fresh (demo)&#8221;</strong> also appears &#8212; it wipes the profile to blank so you can run the Interview from zero in front of the prospect. Use it right before showing the magic.</li>
       </ul>
+      <h3 style="margin-top:22px">If the audience will open Connect themselves &#8212; issue an access code</h3>
+      <p>Connect is now gated for demo audiences, so a demo doesn&#8217;t hand out permanent access to the Foundry&nbsp;Index. <strong>You only need this if attendees will browse Connect on their own devices</strong> &#8212; your own walkthrough below uses a <code>?token=</code> link and is never gated.</p>
+      <ul class="steps">
+        <li><span class="dev web">&#128187; Admin</span> At <strong>admin.foundryconnect.me</strong>, scroll to <strong>Connect demo access</strong>. Set a <strong>lifespan</strong> (an hour covers most demos) and tap <strong>Generate access code</strong>. You get one short code like <code>DEMO&#8209;AB2C&#8209;3DEF</code>.</li>
+        <li>Give attendees the link <code>foundryconnect.me/?demo=1</code> plus that code. They type it once and land <strong>straight in the demo</strong> &#8212; no sign-in screen, no second language prompt.</li>
+        <li><span class="dev web">&#128187; Admin</span> When the demo ends, tap <strong>Revoke now</strong>. Everyone still holding the code is locked back out within about 30 seconds. <em>Access dies with the code &#8212; that&#8217;s the whole point.</em></li>
+      </ul>
+      <div class="note"><b>Only one code is ever live.</b> Generating a new one immediately revokes the previous one, and a code stops working on its own when its lifespan runs out. Nobody on a normal <code>foundryconnect.me</code> link ever sees the gate, so a code for one school can&#8217;t lock out another school&#8217;s family.</div>
+
       <div class="note"><b>If you don&#8217;t see these:</b> demo mode + &#8220;Start fresh&#8221; only show on a demo-enabled account and never ship to normal users. No buttons = you haven&#8217;t done the 7-tap yet.</div>
     </div>
   </section>
@@ -367,7 +376,7 @@
   </section>
 
   <footer>
-    Foundry &#183; Demo Runbook &#183; app = TestFlight Build&nbsp;19 (monetization + LatAm Spanish; Build&nbsp;17&#8211;19 add faster &#8220;Find real programs near me,&#8221; the Mentor &#8220;Talk to me&#8221; fold-in, and a crisis-safe fallback) &#183; Connect live at <a href="https://foundryconnect.me">foundryconnect.me</a>. Mirrors <code>DEMO-RUNBOOK.md</code> in the repo.
+    Foundry &#183; Demo Runbook &#183; app = TestFlight Build&nbsp;21 (monetization + LatAm Spanish; Build&nbsp;17&#8211;19 add faster &#8220;Find real programs near me,&#8221; the Mentor &#8220;Talk to me&#8221; fold-in and a crisis-safe fallback; Build&nbsp;20 adds hang diagnostics; Build&nbsp;21 adds App&nbsp;Attest) &#183; Connect adds a demo access code (<code>?demo=1</code>) and shows the Portrait in Spanish for Spanish-reading families &#183; Connect live at <a href="https://foundryconnect.me">foundryconnect.me</a>. Mirrors <code>DEMO-RUNBOOK.md</code> in the repo.
   </footer>
 
 </div>
