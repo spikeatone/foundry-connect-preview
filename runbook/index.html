@@ -221,7 +221,7 @@
       <p>Connect is now gated for demo audiences, so a demo doesn&#8217;t hand out permanent access to the Foundry&nbsp;Index. <strong>You only need this if attendees will browse Connect on their own devices</strong> &#8212; your own walkthrough below uses a <code>?token=</code> link and is never gated.</p>
       <ul class="steps">
         <li><span class="dev web">&#128187; Admin</span> At <strong>admin.foundryconnect.me</strong>, scroll to <strong>Connect demo access</strong>. Set a <strong>lifespan</strong> (an hour covers most demos) and tap <strong>Generate access code</strong>. You get one short code like <code>DEMO&#8209;AB2C&#8209;3DEF</code>.</li>
-        <li>Give attendees the link <code>foundryconnect.me/?demo=1</code> plus that code. They type it once and land <strong>straight in the demo</strong> &#8212; no sign-in screen, no second language prompt.</li>
+        <li>Give attendees the link <code>demo.foundryconnect.me</code> plus that code. They type it once and land <strong>straight in the demo</strong> &#8212; no sign-in screen, no second language prompt.</li>
         <li><span class="dev web">&#128187; Admin</span> When the demo ends, tap <strong>Revoke now</strong>. Everyone still holding the code is locked back out within about 30 seconds. <em>Access dies with the code &#8212; that&#8217;s the whole point.</em></li>
       </ul>
       <div class="note"><b>Only one code is ever live.</b> Generating a new one immediately revokes the previous one, and a code stops working on its own when its lifespan runs out. Nobody on a normal <code>foundryconnect.me</code> link ever sees the gate, so a code for one school can&#8217;t lock out another school&#8217;s family.</div>
@@ -376,7 +376,7 @@
   </section>
 
   <footer>
-    Foundry &#183; Demo Runbook &#183; app = TestFlight Build&nbsp;21 (monetization + LatAm Spanish; Build&nbsp;17&#8211;19 add faster &#8220;Find real programs near me,&#8221; the Mentor &#8220;Talk to me&#8221; fold-in and a crisis-safe fallback; Build&nbsp;20 adds hang diagnostics; Build&nbsp;21 adds App&nbsp;Attest) &#183; Connect adds a demo access code (<code>?demo=1</code>) and shows the Portrait in Spanish for Spanish-reading families &#183; Connect live at <a href="https://foundryconnect.me">foundryconnect.me</a>. Mirrors <code>DEMO-RUNBOOK.md</code> in the repo.
+    Foundry &#183; Demo Runbook &#183; app = TestFlight Build&nbsp;21 (monetization + LatAm Spanish; Build&nbsp;17&#8211;19 add faster &#8220;Find real programs near me,&#8221; the Mentor &#8220;Talk to me&#8221; fold-in and a crisis-safe fallback; Build&nbsp;20 adds hang diagnostics; Build&nbsp;21 adds App&nbsp;Attest) &#183; Connect adds a demo access code (<code>demo.foundryconnect.me</code>) and shows the Portrait in Spanish for Spanish-reading families &#183; Connect live at <a href="https://foundryconnect.me">foundryconnect.me</a>. Mirrors <code>DEMO-RUNBOOK.md</code> in the repo.
   </footer>
 
 </div>
