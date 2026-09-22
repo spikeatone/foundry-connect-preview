@@ -77,6 +77,8 @@
     background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:6px 12px;
   }
   .badge b { color:var(--ink); font-weight:700; }
+  /* one surface per line: iOS / Android / Web */
+  .surfaces { flex-basis:100%; display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
 
   hr.rule { height:1px; background:var(--line); border:0; margin:38px 0; }
 
@@ -166,7 +168,11 @@
     <h1>How to show the whole thing, end to end</h1>
     <p class="lede">The student app, the app&#8202;<span class="ar">&#8596;</span>&#8202;Connect handoff, and the Foundry Index &#8212; one live walkthrough for a prospect or partner. Keep this open on a second screen and follow the phases in order.</p>
     <div class="meta">
-      <span class="badge">App&nbsp;side &#183; <b>TestFlight Build 22</b> (next: <b>23</b>) &#183; Android next: <b>7</b> &#183; or <b>app.foundryconnect.me</b></span>
+      <div class="surfaces">
+        <span class="badge"><b>iOS:</b> TestFlight Build <b>22</b> now &#183; next: Build <b>23</b></span>
+        <span class="badge"><b>Android:</b> versionCode <b>6</b> (internal testing) now &#183; next: <b>7</b></span>
+        <span class="badge"><b>Web:</b> <b>app.foundryconnect.me</b> &#183; always current, no install</span>
+      </div>
       <span class="badge">Connect &#183; <b>live at foundryconnect.me</b></span>
       <span class="badge">Bring &#183; <b>1 iPhone + 1 laptop</b></span>
     </div>
