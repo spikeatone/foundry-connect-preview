@@ -497,7 +497,7 @@
     if (!nav) return;
     // carry the session params back to Connect
     var carry = [];
-    ['token', 'as', 'api'].forEach(function (k) { var v = Q.get(k); if (v) carry.push(k + '=' + encodeURIComponent(v)); });
+    ['token', 'link', 'as', 'api'].forEach(function (k) { var v = Q.get(k); if (v) carry.push(k + '=' + encodeURIComponent(v)); });
     var connectUrl = function (extra) {
       var parts = carry.slice();
       if (extra) parts = parts.concat(extra);
