@@ -9,7 +9,9 @@
 <!-- Google Play's account-deletion URL (Play policy: an app with account creation must offer a web
      path too). Mirrors the in-app path (Me → Delete my account → DELETE /v1/me). Static, no scripts;
      the request path for people who can't reach the app is email. Published via the Connect sync
-     (connect/ → spikeatone/foundry-connect-preview); see android/PLAY-LISTING.md. -->
+     (connect/ → spikeatone/foundry-connect-preview); see android/PLAY-LISTING.md.
+     The kept consent record (and its email hash) is owner decision D15 in P0-BATCH3-CONTRACT.md §14:
+     keep this page in step with what deleteStudent actually keeps. -->
 <style>
   :root { color-scheme: light; }
   body { margin: 0; background: linear-gradient(#FBF7F0, #F3EDE2); color: #2B2320; font-family: "Sofia Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
@@ -31,12 +33,12 @@
   <h1>Delete your Foundry account</h1>
   <p class="sub">Foundry is built out of your own words. You can take all of it back, any time, without asking anyone.</p>
 
-  <h2>The fastest way — in the app</h2>
+  <h2>The fastest way: in the app</h2>
   <div class="card">
     <ol>
-      <li>Open Foundry and go to the <strong>Me</strong> tab.</li>
+      <li>Open Foundry and go to the <strong>Me</strong> tab. On the web (app.foundryconnect.me), it's the <strong>You</strong> tab.</li>
       <li>Scroll to the bottom and tap <strong>Delete my account</strong>.</li>
-      <li>Confirm with <strong>Delete everything</strong>.</li>
+      <li>Confirm with <strong>Delete everything</strong>. On the web, confirm with <strong>OK</strong>.</li>
     </ol>
     <p>That's it. Deletion is immediate and can't be undone.</p>
   </div>
@@ -44,25 +46,30 @@
   <h2>If you can't get into the app</h2>
   <div class="card">
     <p>Email <a href="mailto:hello@postmarkdigital.com?subject=Delete%20my%20Foundry%20account">hello@postmarkdigital.com</a>
-    from the address you signed in with (or tell us the Google account you used) with the subject
+    from the address you signed in with (or tell us the Apple or Google account you used) with the subject
     <em>Delete my Foundry account</em>. We'll confirm it's you and delete the account within 7 days, then reply once it's done.</p>
   </div>
 
   <h2>What gets deleted</h2>
   <div class="card">
     <ul>
-      <li>Your account (email or Google sign-in) and your name.</li>
+      <li>Your account (email, Apple, or Google sign-in) and your name.</li>
       <li>Your interview, every version of your Portrait, and everything you've told your mentor.</li>
       <li>Your paths, steps, and the things you've tried (your trail).</li>
       <li>The people you added under <em>Who can see me</em>, what they could see, and any notes they sent.</li>
       <li>Any school code you redeemed (it can't be reused).</li>
     </ul>
-    <p>Everything above is removed from Foundry's servers at once and from the phone the moment the app confirms.
-    Encrypted server backups age out within 30 days. Nothing is kept for advertising — Foundry has none.</p>
+    <p>Everything above is removed from Foundry's servers at once and from your phone or browser the moment the app confirms.
+    Encrypted server backups age out within 30 days. Nothing is kept for advertising. Foundry has none.</p>
+    <p>We keep a minimal record that you agreed to Foundry's terms (the name you typed, the date, and your age range)
+    as proof of consent. We also keep a log of when the people you shared with viewed what you shared (who and when, never
+    the content), which helps keep sharing safe. Neither holds your email address. If your account had an email address, we keep
+    a one-way scrambled code made from it (never the address itself), so we can find this record if a question about
+    that address comes up later.</p>
   </div>
 
-  <p class="note">Subscriptions bought through Google Play or the App Store are managed by that store, not by Foundry —
-  cancel there (Google Play → Payments &amp; subscriptions; iOS Settings → Subscriptions) so you aren't charged again.
+  <p class="note">Subscriptions bought through Google Play or the App Store are managed by that store, not by Foundry.
+  Cancel there (Google Play → Payments &amp; subscriptions; iOS Settings → Subscriptions) so you aren't charged again.
   Questions: <a href="mailto:hello@postmarkdigital.com">hello@postmarkdigital.com</a> · <a href="/privacy">Privacy policy</a></p>
 </main>
 </body>
