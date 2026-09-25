@@ -375,12 +375,13 @@
       <p>Connect isn&#8217;t only a mirror of the student &#8212; it&#8217;s a discovery surface for the advisor.</p>
       <ul class="steps">
         <li><span class="dev web">&#128187; Connect</span> Top bar <span class="ar">&#8594;</span> <strong>&#8220;The Foundry Index&#8221;</strong> <span class="ar">&#8594;</span> the <strong>catalog</strong> (41 lists: aviation, welding, electrical, cosmetology, HVAC, &#8230;).</li>
-        <li>Tap a list <span class="ar">&#8594;</span> the <strong>ranked schools</strong> with honest stat chips. An <strong>&#8220;Emerging&#8221;</strong> tier sits separately for schools without enough outcome data &#8212; <em>never a fake rank.</em></li>
+        <li>Tap a list <span class="ar">&#8594;</span> the <strong>ranked schools</strong> with honest stat chips (earnings say how far out: &#8220;1 yr out&#8221;, &#8220;typical (BLS)&#8221;). An <strong>&#8220;Emerging&#8221;</strong> tier sits separately for schools without enough outcome data &#8212; <em>never a fake rank.</em></li>
         <li><strong>Search</strong> &#8212; type a school / city / state to filter live.</li>
         <li><strong>Proximity</strong> &#8212; enter a <strong>ZIP</strong> <span class="ar">&#8594;</span> schools re-sort <strong>nearest-first</strong> with &#8220;~N mi&#8221; chips. <em>An advisor in Dallas types their ZIP and sees the closest programs first.</em></li>
         <li><strong>&#8220;How we rank <span class="ar">&#8594;</span>&#8221;</strong> <span class="ar">&#8594;</span> the <strong>Methodology page</strong>: every pillar and its sources, and the honesty rules. <em>The trust play &#8212; we show our work.</em> The breadcrumb brings you right back.</li>
         <li><strong>Light / dark</strong> &#8212; the toggle persists; set whichever reads best in the room.</li>
       </ul>
+      <div class="note"><b>Who sees the whole catalog (2026-09-25).</b> The demo links (<code>?demo=1</code>, <code>?token=</code>) show all 41 lists. A <strong>real signed-in adult</strong> sees only <strong>&#8220;For [Name]&#8217;s paths&#8221;</strong>: the lists that match the paths that student shares (a path with no list says so honestly). <strong>District staff with a staff seat</strong> (issued in admin Step&nbsp;2 with Role&nbsp;=&nbsp;Staff) see the full catalog. <em>Pitch: the Index is part of what a district pays for.</em></div>
     </div>
   </section>
 
@@ -423,6 +424,7 @@
         <li>Create an <strong>Org</strong> (the school or district). It carries a <strong>license cap</strong> &#8212; issuing past the ceiling is blocked all-or-nothing, so nobody over-provisions by accident.</li>
         <li>Under the Org, <strong>issue codes assigned to named students</strong> (first / last / email) &#8212; typed rows or a <strong>CSV paste</strong>. <strong>&#8220;Email each student their code now&#8221;</strong> is <strong>on by default</strong> (2026-09-23): every student gets a &#8220;your school gave you Foundry access&#8221; email from <code>no&#8209;reply@foundryconnect.me</code> (lands in the inbox, not spam). Issue with it off and the page says plainly the codes were <strong>not</strong> emailed.</li>
         <li><strong>&#8220;View who has a code&#8221;</strong> (Step 1) lists each code&#8217;s student, sent and redeemed status, with an <strong>Email code / Resend</strong> button per unredeemed code &#8212; the server emails it straight to the student (the page never shows the code). <em>No more copy-pasting a code into a text.</em></li>
+        <li><strong>Staff seats (2026-09-25)</strong> &#8212; each row has a <strong>Role: Student / Staff</strong> (CSV: an optional 4th column). A <strong>Staff</strong> row (a teacher or counselor) gets <strong>no code</strong>: an email that their <strong>Foundry Connect access</strong> is on. They sign in at foundryconnect.me with that email and see the <strong>full Foundry Index</strong> (other adults see only their student&#8217;s lists). Staff seats count toward the license cap; the roster&#8217;s <strong>Revoke</strong> ends a staff seat (a teacher who left) or cancels an unused student code, and frees the license.</li>
         <li>Each code is <code>FNDRY&#8209;XXXX&#8209;XXXX</code> (no lookalike 0/O/1/I/L), a <strong>one-time</strong> unlock tied to that student&#8217;s account. Export a CSV of what was issued for the school&#8217;s records.</li>
       </ul>
 
