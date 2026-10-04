@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu código escolar: empieza con Foundry</title>
+<meta name="description" content="¿Tu escuela te dio un código de Foundry? Cuatro pasos para empezar.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://foundryconnect.me/redeem/">
+<!-- Spanish twin of redeem.html (LatAm neutral, tú, no gender-marked words about the student; LOCALIZATION.md).
+     Lives at foundryconnect.me/redeem/es (redeem-es.html → foundry-connect-preview redeem/es/index.html).
+     UI labels are the shipped Spanish ones: app (iOS + Android) "Continuar con correo", tab "Yo",
+     "Escuelas", "Háblame", "Desbloqueado con el código de tu escuela."; web "Ya tengo una cuenta", tab "Tú",
+     "Membresía", "Canjear", "Inicia sesión para guardar tu Retrato". The seat-code email is English-only
+     today, so its "use this link" stays in English. Change both pages together. -->
+<style>
+  /* Foundry Connect's tokens (connect/Foundry Connect.html [data-theme]); light by default, the OS
+     setting when nothing is saved, and the visitor's choice under Connect's own 'fc-theme' key. */
+  :root, [data-theme="light"] {
+    --fc-page: linear-gradient(180deg,#FFFFFF 0%,#F2ECDE 100%);
+    --fc-surface: #FFFFFF; --fc-card: #FFFFFF; --fc-soft-panel: #F7F1E6;
+    --fc-ink: #1C1C1F; --fc-soft: #6B6257; --fc-faint: #9B9187;
+    --fc-line: rgba(28,28,31,.09); --fc-line2: rgba(28,28,31,.14);
+    --fc-chip-bg: #FBEEDD; --fc-accent-ink: #B85E14;
+    color-scheme: light;
+  }
+  [data-theme="dark"] {
+    --fc-page: linear-gradient(180deg,#36586C 0%,#1E2C34 60%,#182128 100%);
+    --fc-surface: #212226; --fc-card: #272A2F; --fc-soft-panel: #232D34;
+    --fc-ink: #F3EFE8; --fc-soft: #B7C4CB; --fc-faint: #8593A0;
+    --fc-line: rgba(255,255,255,.09); --fc-line2: rgba(255,255,255,.16);
+    --fc-chip-bg: rgba(244,127,33,.16); --fc-accent-ink: #F89C1C;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fc-page: linear-gradient(180deg,#36586C 0%,#1E2C34 60%,#182128 100%);
+      --fc-surface: #212226; --fc-card: #272A2F; --fc-soft-panel: #232D34;
+      --fc-ink: #F3EFE8; --fc-soft: #B7C4CB; --fc-faint: #8593A0;
+      --fc-line: rgba(255,255,255,.09); --fc-line2: rgba(255,255,255,.16);
+      --fc-chip-bg: rgba(244,127,33,.16); --fc-accent-ink: #F89C1C;
+      color-scheme: dark;
+    }
+  }
+  html { background: #182128; }
+  html[data-theme="light"] { background: #F2ECDE; }
+  body { margin: 0; min-height: 100vh; background: var(--fc-page); color: var(--fc-ink); font-family: "Sofia Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 40px 20px 64px; }
+  h1 { font-family: Literata, Georgia, serif; font-weight: 600; font-size: 30px; line-height: 1.2; margin: 0 0 8px; }
+  .sub { color: var(--fc-soft); font-size: 17px; line-height: 1.5; margin: 0 0 28px; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .flame { width: 28px; height: 44px; display: block; }
+  .pills { display: flex; gap: 8px; }
+  .pill { font: 600 13px/1 "Sofia Sans", system-ui, -apple-system, sans-serif; color: var(--fc-soft); background: var(--fc-surface); border: 1px solid var(--fc-line2); border-radius: 22px; padding: 9px 15px; text-decoration: none; cursor: pointer; }
+  .pill:hover, .pill:focus-visible { border-color: #F47F21; color: var(--fc-accent-ink); }
+  a { color: var(--fc-accent-ink); }
+  .step { display: flex; gap: 14px; background: var(--fc-card); border: 1px solid var(--fc-line2); border-radius: 14px; padding: 18px 18px 18px 16px; margin: 0 0 14px; line-height: 1.55; }
+  .num { flex: 0 0 34px; height: 34px; border-radius: 50%; background: #F47F21; color: #fff; font-weight: 700; font-size: 17px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .body { min-width: 0; flex: 1; }
+  .step h2 { font-family: Literata, Georgia, serif; font-size: 20px; font-weight: 600; line-height: 1.3; margin: 3px 0 8px; }
+  .step p { margin: 0 0 10px; }
+  .step p:last-child, .step ul:last-child, .step ol:last-child { margin-bottom: 0; }
+  .step ol, .step ul { padding-left: 20px; margin: 0 0 10px; }
+  .step li + li { margin-top: 6px; }
+  .btn { display: inline-block; background: var(--fc-ink); color: var(--fc-surface); text-decoration: none; font-weight: 600; font-size: 15px; padding: 11px 16px; border-radius: 10px; margin: 2px 0 10px; }
+  .btn.ember { background: #F47F21; color: #fff; }
+  .row { padding: 10px 0; border-top: 1px solid var(--fc-line); }
+  .row:first-of-type { border-top: 0; padding-top: 0; }
+  .row b { display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--fc-soft); margin-bottom: 4px; }
+  .soon { display: inline-block; font-size: 13px; font-weight: 600; color: var(--fc-accent-ink); background: var(--fc-chip-bg); border-radius: 999px; padding: 3px 10px; margin-bottom: 6px; }
+  .tip { background: var(--fc-soft-panel); border-left: 3px solid #F47F21; border-radius: 0 10px 10px 0; padding: 10px 12px; font-size: 15px; margin: 4px 0 10px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 15px; letter-spacing: .04em; background: var(--fc-chip-bg); border-radius: 6px; padding: 1px 6px; white-space: nowrap; }
+  h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--fc-soft); margin: 32px 0 10px; }
+  .card { background: var(--fc-card); border: 1px solid var(--fc-line2); border-radius: 14px; padding: 16px 18px; line-height: 1.55; }
+  .card ul { padding-left: 20px; margin: 0; }
+  .card li + li { margin-top: 8px; }
+  .en { color: var(--fc-soft); font-size: 14px; }
+  .note { font-size: 13px; color: var(--fc-soft); margin-top: 28px; line-height: 1.5; }
+</style>
+<script>
+  // Before first paint, so a saved dark choice never flashes light. Same key as Connect.
+  try {
+    var t = localStorage.getItem("fc-theme");
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+</script>
+</head>
+<body>
+<main>
+  <div class="top">
+    <img class="flame" src="/favicon.svg" alt="">
+    <div class="pills">
+      <a class="pill" href="/redeem/" hreflang="en" lang="en">English</a>
+      <button class="pill" id="theme" type="button" hidden></button>
+    </div>
+  </div>
+  <h1>¿Tu escuela te dio un código de Foundry?</h1>
+  <p class="sub">Tu escuela paga Foundry+ por ti. Son cuatro pasos. Casi todo el tiempo es la entrevista, unos
+  10 minutos.</p>
+
+  <section class="step">
+    <div class="num" aria-hidden="true">1</div>
+    <div class="body">
+      <h2>Descarga Foundry</h2>
+      <div class="row">
+        <b>Teléfono Android</b>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=me.foundryconnect.app&amp;hl=es_419">Disponible en Google Play</a>
+      </div>
+      <div class="row">
+        <b>iPhone</b>
+        <span class="soon">App Store: muy pronto</span>
+        <p>Mientras tanto, usa Foundry en la web en <a href="https://app.foundryconnect.me">app.foundryconnect.me</a>.
+        Es la app completa, y tu cuenta se queda contigo cuando llegue la app para iPhone.</p>
+      </div>
+      <div class="row">
+        <b>Chromebook o computadora</b>
+        <p>Usa <a href="https://app.foundryconnect.me">app.foundryconnect.me</a>. No hay que instalar nada.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="num" aria-hidden="true">2</div>
+    <div class="body">
+      <h2>Haz tu entrevista y guárdala con tu correo</h2>
+      <ol>
+        <li>Abre Foundry y habla con tu mentor. Te pregunta qué te gusta y cómo te gusta trabajar.</li>
+        <li>Cuando aparezca tu Retrato, guárdalo: toca <strong>Continuar con correo</strong>
+        <span class="en">(en inglés: Continue with email)</span>. En la web, toca
+        <strong>Inicia sesión para guardar tu Retrato</strong>.</li>
+        <li>Escribe tu correo y luego el código de 6 dígitos que te enviamos. Te recomendamos mucho usar un correo
+        personal, para que puedas seguir usando Foundry después de graduarte.</li>
+      </ol>
+      <p class="tip">Usa <strong>Continuar con correo</strong>, no Apple ni Google. En el paso 3 entras con ese
+      mismo correo, así que tiene que coincidir.</p>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="num" aria-hidden="true">3</div>
+    <div class="body">
+      <h2>Ingresa tu código escolar en la web</h2>
+      <a class="btn ember" href="https://app.foundryconnect.me">Abrir app.foundryconnect.me</a>
+      <ol>
+        <li>Toca <strong>Ya tengo una cuenta</strong> y entra con el mismo correo del paso 2.</li>
+        <li>Toca <strong>Tú</strong> abajo y busca <strong>Membresía</strong>.</li>
+        <li>Escribe tu código escolar (se ve así: <code>FNDRY-7K2Q-9MXC</code>) y toca <strong>Canjear</strong>.</li>
+      </ol>
+      <p class="tip">¿Te llegó el código por correo? El enlace <strong>use this link</strong> de ese correo llena el
+      código por ti. Igual tienes que entrar primero.</p>
+      <p>¿Por qué en la web? La App Store no permite códigos escolares dentro de las apps, así que todos los
+      ingresan aquí. Igual desbloquea la app.</p>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="num" aria-hidden="true">4</div>
+    <div class="body">
+      <h2>Vuelve a la app</h2>
+      <ol>
+        <li>Cierra Foundry por completo y vuelve a abrirla.</li>
+        <li>Mira la pestaña <strong>Yo</strong>. Dice <em>Desbloqueado con el código de tu escuela.</em> y la fecha
+        hasta la que dura tu acceso.</li>
+      </ol>
+      <p>Ahora tienes: los rankings de escuelas en <strong>Escuelas</strong>, <strong>Háblame</strong> para hablar
+      con tu mentor cuando quieras, y más de un camino para explorar.</p>
+      <p>¿Usas la web en vez de la app? Ya terminaste en el paso 3.</p>
+    </div>
+  </section>
+
+  <h3>Si algo sale mal</h3>
+  <div class="card">
+    <ul>
+      <li><strong>"No reconocemos ese código."</strong> Revisa cada letra y número, y vuelve a intentarlo.</li>
+      <li><strong>"Ese código ya se usó."</strong> Cada código funciona una sola vez, para una sola persona. Si no lo
+      usaste tú, avísale a quien te dio el código.</li>
+      <li><strong>"Ese código venció."</strong> Pídele uno nuevo a quien te dio el código.</li>
+      <li><strong>¿La app sigue bloqueada?</strong> Revisa que la app y la web usen el mismo correo, y luego cierra y
+      vuelve a abrir la app.</li>
+    </ul>
+  </div>
+
+  <p class="note">Un código escolar no comparte con tu escuela nada de lo que le cuentas a Foundry. Tu entrevista y
+  tu Retrato son tuyos, a menos que agregues a alguien en <em>Quién puede verme</em>.
+  Preguntas: <a href="mailto:hello@postmarkdigital.com?subject=Foundry%20c%C3%B3digo%20escolar">hello@postmarkdigital.com</a>
+  · <a href="/privacy">Política de privacidad (en inglés)</a></p>
+</main>
+<script>
+  // The theme pill names the theme it switches TO, like Connect's ("Dark" / "Light").
+  (function () {
+    var root = document.documentElement, btn = document.getElementById("theme");
+    function current() {
+      var t = root.getAttribute("data-theme");
+      if (t === "light" || t === "dark") return t;
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    function paint() {
+      var dark = current() === "dark";
+      btn.textContent = dark ? "Claro" : "Oscuro";
+      btn.setAttribute("aria-label", dark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+    }
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("fc-theme", next); } catch (e) {}
+      paint();
+    });
+    btn.hidden = false;
+    paint();
+  })();
+</script>
+</body>
+</html>
