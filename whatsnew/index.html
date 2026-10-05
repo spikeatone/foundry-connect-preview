@@ -14,6 +14,7 @@
   <meta property="og:description" content="What changed for the adults a student shares with: more to see from the start, the Foundry Index through their paths, and notes checked first.">
   <meta property="og:url" content="https://foundryconnect.me/whatsnew/">
   <meta property="og:image" content="https://foundryconnect.me/og-foundry.png">
+  <link rel="alternate" hreflang="es" href="https://foundryconnect.me/whatsnew/es/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Sofia+Sans:wght@400;600;700;800&display=swap">
 <style>
@@ -77,6 +78,13 @@
   header { display: flex; flex-direction: column; gap: 18px; margin: 0 0 14px; }
   .brandline { display: flex; align-items: center; gap: 10px; }
   .flame { width: 22px; height: 28px; flex: none; }
+  .brandline .pill { margin-left: auto; }
+  .pill {
+    font: 600 13px/1 "Sofia Sans", system-ui, sans-serif; color: var(--soft);
+    background: var(--card); border: 1px solid var(--line); border-radius: 22px;
+    padding: 9px 15px; text-decoration: none;
+  }
+  .pill:hover, .pill:focus-visible { border-color: var(--flame); color: var(--ink); }
   .wordmark {
     font: 800 12.5px/1 "Sofia Sans", sans-serif;
     letter-spacing: .24em; text-transform: uppercase; color: var(--flame);
@@ -143,6 +151,8 @@
 </style>
 </head>
 <body>
+<!-- Spanish twin: whatsnew-es.html → foundry-connect-preview whatsnew/es/index.html. It carries the
+     adults' section only (the Sep 22 student section stays English). Change both together. -->
 <div class="wrap">
   <header>
     <div class="brandline">
@@ -154,6 +164,7 @@
         <path fill="url(#fg)" d="M11 0c1.4 4.6-.6 6.9-2.6 9.2C6.3 11.6 4 14.2 4 18.4 4 23.7 7.4 28 11 28s7-4.3 7-9.6c0-2.9-1.1-5-2.4-6.9-.4 1.5-1.2 2.7-2.6 3.3.6-3.9-.3-9.6-2-14.8z"/>
       </svg>
       <a href="/" style="text-decoration:none"><span class="wordmark">Foundry Connect</span></a>
+      <a class="pill" href="/whatsnew/es/" hreflang="es" lang="es">Español</a>
     </div>
     <h1>What's new for the adults in a student's corner</h1>
     <p class="dek">When a student adds you in the Foundry app, you sign in at foundryconnect.me and see what they chose to share, and nothing else. Here's what changed for you since September 22.</p>
