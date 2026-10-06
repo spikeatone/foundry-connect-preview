@@ -37,4 +37,4 @@ This repo is the GitHub Pages site behind foundryconnect.me. Pushing to `main` p
 the source in the main Foundry project; edit them there, then copy them here. `/privacy`, `/terms` and
 `/runbook` are edited in this repo.
 
-Questions: hello@postmarkdigital.com
+Questions: support@foundryconnect.org
