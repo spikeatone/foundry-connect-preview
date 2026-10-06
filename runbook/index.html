@@ -184,7 +184,7 @@
       <div class="lane phone">
         <p class="lane-t">&#128241; On the phone <span style="color:var(--soft);font-weight:600">(the student)</span></p>
         <ol>
-          <li>Enable demo mode (Me <span class="ar">&#8594;</span> tap &#8220;Signed in as&#8221; &#215;7)</li>
+          <li>Enable demo mode (iPhone: Me <span class="ar">&#8594;</span> tap &#8220;Signed in as&#8221; &#215;7)</li>
           <li>Interview <span class="ar">&#8594;</span> Portrait <span class="ar">&#8594;</span> sign in</li>
           <li>Pick a Path <span class="ar">&#8594;</span> &#8220;I did this&#8221; <span class="ar">&#8594;</span> reflect <span class="ar">&#8594;</span> mentor offers the next step</li>
           <li>&#8220;Not for me&#8221; <span class="ar">&#8594;</span> a &#8220;no&#8221; becomes real data · Me <span class="ar">&#8594;</span> &#8220;How you&#8217;ve grown&#8221;</li>
@@ -217,12 +217,12 @@
       <div><h2>Before the demo &#8212; turn on demo mode</h2><p class="phase-time">~5 min &#183; once</p></div>
     </div>
     <div class="phase-body">
-      <p>Two things in the room: <strong>a real iPhone on TestFlight Build&nbsp;35</strong>, or an Android phone on <strong>versionCode&nbsp;24</strong> (the simulator can&#8217;t do this &#8212; no real Sign in with Apple, no on-device voice) and <strong>a laptop</strong> for Connect.</p>
+      <p>Two things in the room: <strong>a real iPhone on TestFlight Build&nbsp;35</strong> (the simulator can&#8217;t do this &#8212; no real Sign in with Apple, no on-device voice) and <strong>a laptop</strong> for Connect. <strong>Demo mode is iPhone-only:</strong> &#8220;Enable demo mode,&#8221; &#8220;Start fresh (demo),&#8221; re-sync advisors and the Connect preview link (this phase, Privacy and the handoff) don&#8217;t exist on Android. An <strong>Android phone (versionCode&nbsp;24)</strong> can still show the student app itself (Interview, Portrait, Home, Schools/Apprenticeships, the high-school-grads line) and real &#8220;Add someone&#8221; by email + Connect sign-in (Real sign-in, below).</p>
       <div class="note"><b>New in Build&nbsp;29 / Android&nbsp;13:</b> on a signed-out phone after <strong>Start over</strong>, Welcome says <em>&#8220;Starting over as [name]. Not you?&#8221;</em> Tap <strong>Not you?</strong> to begin as a new student (age and consent again); the same student just taps <strong>Begin</strong>. <em>A shared school phone never hands one student&#8217;s signature to the next.</em></div>
       <p>On the phone, get to a signed-in account, then:</p>
       <ul class="steps">
         <li>Go to the <strong>Me</strong> tab.</li>
-        <li><span class="dev phone">&#128241; Phone</span> Tap the <strong>&#8220;Signed in as&#8230;&#8221;</strong> row <strong>7 times</strong>. A hidden <strong>&#8220;Enable demo mode&#8221;</strong> button appears. <em>The whole row is the target &#8212; just keep tapping.</em></li>
+        <li><span class="dev phone">&#128241; iPhone</span> Tap the <strong>&#8220;Signed in as&#8230;&#8221;</strong> row <strong>7 times</strong>. A hidden <strong>&#8220;Enable demo mode&#8221;</strong> button appears. <em>The whole row is the target &#8212; just keep tapping.</em></li>
         <li>Tap <strong>Enable demo mode</strong>. It seeds <strong>three Connect advisors</strong> (counselor / parent / coach) and mints the <strong>demo token</strong> Connect reads. The button then reads <em>&#8220;Demo mode on, re-sync advisors&#8221;</em> &#8212; tap it anytime to reset advisors + grants between demos.</li>
         <li><strong>&#8220;Start fresh (demo)&#8221;</strong> also appears &#8212; it wipes the profile to blank so you can run the Interview from zero in front of the prospect. Use it right before showing the magic.</li>
       </ul>
@@ -237,6 +237,7 @@
       <div class="note"><b>Only one code is ever live.</b> Generating a new one immediately revokes the previous one, and a code stops working on its own when its lifespan runs out. Nobody on a normal <code>foundryconnect.me</code> link ever sees the gate, so a code for one school can&#8217;t lock out another school&#8217;s family.</div>
 
       <div class="note"><b>If you don&#8217;t see these:</b> demo mode + &#8220;Start fresh&#8221; only show on a demo-enabled account and never ship to normal users. No buttons = you haven&#8217;t done the 7-tap yet.</div>
+      <div class="note"><b>Demo mode works only on Foundry team demo accounts.</b> If &#8220;Enable demo mode&#8221; says <em>&#8220;Demo mode isn&#8217;t available on this account&#8221;</em> (Build&nbsp;36; on Build&nbsp;35 the button just does nothing), you&#8217;re signed in with an account that isn&#8217;t on the demo list: sign in with a team demo account, or ask for this one to be added.</div>
     </div>
   </section>
 
@@ -291,6 +292,7 @@
     </div>
     <div class="phase-body">
       <p>The spine of the product: <strong>the student controls everything, private by default.</strong></p>
+      <p><em>&#128241; iPhone only for the three seeded advisors (they come from demo mode). On Android, add someone by email first (Real sign-in, below).</em></p>
       <ul class="steps">
         <li><span class="dev phone">&#128241; Phone</span> Me <span class="ar">&#8594;</span> <strong>Who can see me</strong>. Three seeded advisors, each with <strong>per-aspect grants</strong> (Portrait, Paths, Experiences, Steps, the road ahead, and <strong>messages</strong> as its own channel).</li>
         <li>Toggle one on/off &#8212; <em>the student decides, per person, per aspect. A parent and a counselor can see completely different things.</em></li>
@@ -298,7 +300,7 @@
       </ul>
       <div class="note"><b>New in Build&nbsp;23 (web first):</b> <strong>Add someone</strong> takes an optional <strong>email</strong> and two new roles, <strong>Teacher</strong> and <strong>Family member</strong> (six in all, as buttons that wrap). <strong>Sharing is free</strong> &#8212; no Foundry+ wall on Add someone (decided 2026-09-22; the web never had one, and iOS&nbsp;23 / Android&nbsp;7 drop it). A student with no name on the account is asked for their first name when inviting by email, so the adult knows who it&#8217;s from.</div>
       <div class="note"><b>Adding advisors &#8212; so they show in the DEMO link.</b> The demo <code>?token=</code> link switches advisors <em>by role</em> (<code>&amp;as=counselor</code> / <code>parent</code> / <code>coach</code>), so it reads the <strong>three seeded roles</strong>. For a normal demo you don&#8217;t add anyone &#8212; the three are already there. Only add a new advisor in <strong>Who can see me</strong> when a prospect specifically wants to see a <em>fourth</em> person; give them one of the three roles so Connect can select them with <code>&amp;as=</code>. A second advisor sharing a role won&#8217;t surface on its own (Connect picks the first match for that role). <b>Always add advisors on the phone (Who can see me), never in Connect</b> &#8212; Connect is a read-only window; the student owns the list.</div>
-      <div class="note"><b>When to &#8220;re-sync advisors.&#8221;</b> <span class="dev phone">&#128241; Phone</span> Me <span class="ar">&#8594;</span> <strong>&#8220;Demo mode on, re-sync advisors.&#8221;</strong> Tap it to reset the three advisors and their grants back to the demo matrix. Use it <strong>between demos</strong> (a previous prospect flipped grants and you want the clean starting picture), or if the grant switches drifted from what the script expects. It does <strong>not</strong> touch the Portrait, paths, or the trail &#8212; that&#8217;s <strong>&#8220;Start fresh&#8221;</strong> (Phase&nbsp;0). Re-sync = tidy the sharing matrix; Start fresh = wipe the whole profile.</div>
+      <div class="note"><b>When to &#8220;re-sync advisors.&#8221;</b> <span class="dev phone">&#128241; iPhone</span> Me <span class="ar">&#8594;</span> <strong>&#8220;Demo mode on, re-sync advisors.&#8221;</strong> Tap it to reset the three advisors and their grants back to the demo matrix. Use it <strong>between demos</strong> (a previous prospect flipped grants and you want the clean starting picture), or if the grant switches drifted from what the script expects. It does <strong>not</strong> touch the Portrait, paths, or the trail &#8212; that&#8217;s <strong>&#8220;Start fresh&#8221;</strong> (Phase&nbsp;0). Re-sync = tidy the sharing matrix; Start fresh = wipe the whole profile.</div>
     </div>
   </section>
 
@@ -310,8 +312,9 @@
     </div>
     <div class="phase-body">
       <p>The money shot: <strong>the student&#8217;s phone controls what a trusted adult sees on the web, live.</strong></p>
+      <p><em>&#128241; iPhone only: the preview link needs demo mode. With an Android phone, show Real sign-in (below) instead.</em></p>
       <ul class="steps">
-        <li><span class="dev phone">&#128241; Phone</span> Who can see me <span class="ar">&#8594;</span> pick the counselor <span class="ar">&#8594;</span> <strong>&#8220;Copy Connect preview link.&#8221;</strong> A real URL: <code>foundryconnect.me/?token=&#8230;&amp;as=counselor</code>.</li>
+        <li><span class="dev phone">&#128241; iPhone</span> Who can see me <span class="ar">&#8594;</span> pick the counselor <span class="ar">&#8594;</span> <strong>&#8220;Copy Connect preview link.&#8221;</strong> A real URL: <code>foundryconnect.me/?token=&#8230;&amp;as=counselor</code>.</li>
         <li><span class="dev web">&#128187; Connect</span> Paste it into the laptop browser <span class="ar">&#8594;</span> <strong>Foundry Connect</strong> opens showing <strong>that student&#8217;s real, grant-filtered data</strong> &#8212; only what the counselor may see.</li>
         <li><span class="dev phone">&#128241; Phone</span> Flip a grant (turn Paths off). Within a few seconds the Connect page <strong>updates on its own</strong> (it polls every 4s). <em>The student just changed what their counselor sees, from their pocket.</em></li>
         <li><span class="dev web">&#128187; Connect</span> With messages granted, use the <strong>&#8220;Reach out&#8221;</strong> box <span class="ar">&#8594;</span> type a note <span class="ar">&#8594;</span> <strong>Send</strong>. It lands in the student&#8217;s <strong>Mentor tab <span class="ar">&#8594;</span> &#8220;Notes from your people.&#8221;</strong> Full loop, both directions.</li>
@@ -405,8 +408,8 @@
 
       <h3>Reset between demos</h3>
       <ul class="steps">
-        <li><span class="dev phone">&#128241; Phone</span> Me <span class="ar">&#8594;</span> <strong>Start fresh (demo)</strong> to run the Interview from zero again.</li>
-        <li><span class="dev phone">&#128241; Phone</span> Me <span class="ar">&#8594;</span> <strong>&#8220;Demo mode on, re-sync advisors&#8221;</strong> to reset the three advisors + grants.</li>
+        <li><span class="dev phone">&#128241; iPhone</span> Me <span class="ar">&#8594;</span> <strong>Start fresh (demo)</strong> to run the Interview from zero again.</li>
+        <li><span class="dev phone">&#128241; iPhone</span> Me <span class="ar">&#8594;</span> <strong>&#8220;Demo mode on, re-sync advisors&#8221;</strong> to reset the three advisors + grants.</li>
         <li><span class="dev web">&#128187; Connect</span> Reload the preview link &#8212; it re-reads the student&#8217;s current grants.</li>
       </ul>
     </div>
