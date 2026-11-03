@@ -10,11 +10,14 @@
 <link rel="alternate" hreflang="es" href="https://foundryconnect.me/redeem/es/">
 <!-- The page districts hand to students with bulk seat codes (owner, 2026-10-03). Lives at
      foundryconnect.me/redeem (connect/ → spikeatone/foundry-connect-preview redeem/index.html).
-     Keep it in step with the real flow: seat codes are redeemed on the WEB only (iOS dropped in-app
-     redemption for App Review 3.1.1) at app.foundryconnect.me → You → Membership (or the seat email's
-     ?redeem= link); the seat is on the account, so the app unlocks on its next launch. The sign-in
-     must be the same account on both sides, hence "Continue with email". The iPhone row links the App Store (1.0 live 2026-10-26). Same look as
-     delete-account.html; static; the only script is the light/dark pill. Spanish twin: redeem-es.html → redeem/es/index.html;
+     Keep it in step with the real flow, WEB FIRST in three steps (owner, 2026-11-03): (1) the interview and
+     "Sign in to save your Portrait" on app.foundryconnect.me; (2) the code on the same site, You → Membership
+     → Redeem (or the seat email's ?redeem= link), which shows "Code redeemed." (web/src/screens/get-app.ts);
+     (3) the app, from that screen's store button (a QR on a computer) or the official badges here
+     (/badge-app-store.svg, /badge-google-play.png). Seat codes are redeemed on the WEB only (no in-app
+     redemption, App Review 3.1.1). The seat is on the account, so the app is unlocked as soon as the student
+     signs in with the SAME email ("Continue with email"); never tell a student to close and reopen the app.
+     Same look as delete-account.html; static; the only script is the light/dark pill. Spanish twin: redeem-es.html → redeem/es/index.html;
      change both together. -->
 <style>
   /* Foundry Connect's tokens (connect/Foundry Connect.html [data-theme]); light by default, the OS
