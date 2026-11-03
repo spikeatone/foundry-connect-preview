@@ -67,6 +67,9 @@
   .step li + li { margin-top: 6px; }
   .btn { display: inline-block; background: var(--fc-ink); color: var(--fc-surface); text-decoration: none; font-weight: 600; font-size: 15px; padding: 11px 16px; border-radius: 10px; margin: 2px 0 10px; }
   .btn.ember { background: #F47F21; color: #fff; }
+  .badges { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 4px 0 6px; }
+  .badges a { display: inline-flex; line-height: 0; border-radius: 8px; }
+  .badges img { height: 48px; width: auto; }
   .row { padding: 10px 0; border-top: 1px solid var(--fc-line); }
   .row:first-of-type { border-top: 0; padding-top: 0; }
   .row b { display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--fc-soft); margin-bottom: 4px; }
@@ -146,13 +149,9 @@
       <p>Now open for you: the school rankings in <strong>Schools</strong>, <strong>Talk to me</strong> with your
       mentor any time, and more than one path to explore.</p>
       <p>Prefer to stay on the website? You're already done after Step 2.</p>
-      <div class="row">
-        <b>Android phone</b>
-        <a class="btn" href="https://play.google.com/store/apps/details?id=me.foundryconnect.app">Get it on Google Play</a>
-      </div>
-      <div class="row">
-        <b>iPhone</b>
-        <a class="btn" href="https://apps.apple.com/us/app/id6801205240">Download on the App Store</a>
+      <div class="badges">
+        <a href="https://apps.apple.com/us/app/id6801205240" aria-label="Download Foundry on the App Store"><img src="/badge-app-store.svg" width="144" height="48" alt="Download on the App Store"></a>
+        <a href="https://play.google.com/store/apps/details?id=me.foundryconnect.app" aria-label="Get Foundry on Google Play"><img src="/badge-google-play.png" width="161" height="48" alt="Get it on Google Play"></a>
       </div>
     </div>
   </section>
