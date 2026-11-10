@@ -25,10 +25,25 @@
   a { color: #A3520F; }
   .flame { width: 28px; height: 44px; margin-bottom: 18px; display: block; }
   .note { font-size: 13px; color: #6B5E56; margin-top: 28px; line-height: 1.5; }
+  /* WCAG 2.4.5: the same small page nav on every Connect support page */
+  .pagenav ul { list-style: none; margin: 0 0 26px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font: 600 13px/1.5 "Sofia Sans", system-ui, -apple-system, sans-serif; }
+  .pagenav a { color: #A3520F; text-decoration: none; }
+  .pagenav a:hover { text-decoration: underline; }
+  .pagenav a[aria-current="page"] { color: #2B2320; text-decoration: underline; text-underline-offset: 3px; }
 </style>
 </head>
 <body>
 <main>
+  <nav class="pagenav" aria-label="Foundry Connect pages">
+  <ul>
+    <li><a href="/">Foundry Connect</a></li>
+    <li><a href="/support">Support</a></li>
+    <li><a href="/whatsnew/">What's new</a></li>
+    <li><a href="/redeem/">School codes</a></li>
+    <li><a href="/delete-account" aria-current="page">Delete an account</a></li>
+    <li><a href="/Foundry%20Index%20Methodology.html">How we rank</a></li>
+  </ul>
+  </nav>
   <img class="flame" src="/favicon.svg" alt="">
   <h1>Delete your Foundry account</h1>
   <p class="sub">Foundry is built out of your own words. You can take all of it back, any time, without asking anyone.</p>

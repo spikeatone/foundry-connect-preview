@@ -51,7 +51,7 @@
     --fc-card: #272A2F;
     --fc-soft-panel: #232D34;
     --fc-ink: #F3EFE8;
-    --fc-soft: #B7C4CB;
+    --fc-soft: #BFCBD1;
     --fc-faint: #9BA7B1;
     --fc-line: rgba(255,255,255,.09);
     --fc-line2: rgba(255,255,255,.16);
@@ -69,7 +69,7 @@
       --fc-card: #272A2F;
       --fc-soft-panel: #232D34;
       --fc-ink: #F3EFE8;
-      --fc-soft: #B7C4CB;
+      --fc-soft: #BFCBD1;
       --fc-faint: #9BA7B1;
       --fc-line: rgba(255,255,255,.09);
       --fc-line2: rgba(255,255,255,.16);
@@ -93,6 +93,19 @@
   }
   .wrap { max-width: 720px; margin: 0 auto; padding: 40px 22px 80px; }
 
+  /* WCAG 2.4.5: the same small page nav on every Connect support page */
+  .pagenav ul { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font: 600 13px/1.5 'Sofia Sans', system-ui, sans-serif; }
+  .pagenav a { color: var(--fc-accent-ink); text-decoration: none; }
+  .pagenav a:hover { text-decoration: underline; }
+  .pagenav a[aria-current="page"] { color: var(--fc-ink); text-decoration: underline; text-underline-offset: 3px; }
+  /* dark: the nav sits on the page gradient (#36586C at the top), so it uses a lighter ink (4.58:1) */
+  [data-theme="dark"] .pagenav a { color: #BFCBD1; }
+  [data-theme="dark"] .pagenav a[aria-current="page"] { color: var(--fc-ink); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .pagenav a { color: #BFCBD1; }
+    :root:not([data-theme="light"]) .pagenav a[aria-current="page"] { color: var(--fc-ink); }
+  }
+
   /* ---- Breadcrumb (matches Connect's own) ---- */
   .crumbs {
     display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
@@ -104,8 +117,12 @@
     color: var(--fc-soft); text-decoration: none; transition: color .18s;
   }
   .crumbs a:hover { color: var(--fc-accent-ink); }
-  .crumbs .sep { color: var(--fc-faint); }
+  .crumbs .sep { color: var(--fc-soft); }
   .crumbs .here { color: var(--fc-accent-ink); }
+  [data-theme="dark"] .kicker, [data-theme="dark"] .crumbs .here, [data-theme="dark"] .wrap > section > p a { color: #FABD67; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .kicker, :root:not([data-theme="light"]) .crumbs .here, :root:not([data-theme="light"]) .wrap > section > p a { color: #FABD67; }
+  }
   .crumbs .chev { font-size: 17px; line-height: 1; }
 
   /* ---- Masthead ---- */
@@ -364,6 +381,32 @@
   <!-- Persistent breadcrumb back into Connect (matches Connect's own breadcrumb). Links are built at
        runtime from the return context Connect passes (?back / ?slug / ?token / ?as), so this page is
        no longer a dead end — every crumb returns the reader to the Index view they came from. -->
+  <nav class="pagenav" id="fc-pagenav" aria-label="Foundry Connect pages">
+  <ul>
+    <li><a href="/">Foundry Connect</a></li>
+    <li><a href="/support">Support</a></li>
+    <li><a href="/whatsnew/" data-es-href="/whatsnew/es/">What's new</a></li>
+    <li><a href="/redeem/" data-es-href="/redeem/es/">School codes</a></li>
+    <li><a href="/delete-account">Delete an account</a></li>
+    <li><a href="/Foundry%20Index%20Methodology.html" aria-current="page">How we rank</a></li>
+  </ul>
+  </nav>
+  <script>
+  // Spanish labels for the page nav (the same nav the other Connect pages carry); English-only pages get hreflang="en".
+  (function () {
+    if (window.IDX_LANG !== 'es') return;
+    var nav = document.getElementById('fc-pagenav');
+    var ES = { 'Support': 'Soporte', "What's new": 'Novedades', 'School codes': 'C\u00f3digos escolares', 'Delete an account': 'Borrar una cuenta', 'How we rank': 'C\u00f3mo clasificamos' };
+    nav.setAttribute('aria-label', 'P\u00e1ginas de Foundry Connect');
+    Array.prototype.forEach.call(nav.querySelectorAll('a'), function (a) {
+      var t = a.textContent; if (ES[t]) a.textContent = ES[t];
+      var h = a.getAttribute('data-es-href'); if (h) a.setAttribute('href', h);
+      else if (/^\/(support|delete-account)$/.test(a.getAttribute('href'))) a.setAttribute('hreflang', 'en');
+      if (a.getAttribute('aria-current')) a.setAttribute('href', a.getAttribute('href') + '?lang=es');
+    });
+  })();
+  </script>
+
   <nav id="fc-crumbs" class="crumbs" aria-label="Breadcrumb"></nav>
 
   <header class="masthead">

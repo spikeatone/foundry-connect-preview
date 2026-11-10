@@ -25,7 +25,7 @@
     --ink: #1C1C1F;
     --read: #7A604F;
     --soft: #6E6259;
-    --faint: #9A8F85;
+    --faint: #72685F;
     --card: #FFFFFF;
     --line: #E8E0D2;
     --flame: #F47F21;
@@ -34,6 +34,9 @@
     --chip-border: #F0D9BF;
     --spark: #3E6E8C;
     --spark-bg: #E9F1F6;
+    --link: #A3520F;
+    --focus: #A3520F;
+    --navlink: #A3520F;
   }
   :root:not([data-theme="light"]) { }
   @media (prefers-color-scheme: dark) {
@@ -50,6 +53,9 @@
       --chip-border: #47565f;
       --spark: #8FC1DC;
       --spark-bg: #24404F;
+      --link: #F89C1C;
+      --focus: #F89C1C;
+      --navlink: #C3CDD4;
     }
   }
   :root[data-theme="dark"] {
@@ -65,6 +71,9 @@
     --chip-border: #47565f;
     --spark: #8FC1DC;
     --spark-bg: #24404F;
+    --link: #F89C1C;
+    --focus: #F89C1C;
+    --navlink: #C3CDD4;
   }
 
   body {
@@ -128,7 +137,7 @@
   }
   .why { font-size: 13.5px; color: var(--faint); }
   .why b { color: var(--soft); font-weight: 700; }
-  .why a, .item p a { color: var(--flame); font-weight: 700; text-decoration: none; }
+  .why a, .item p a { color: var(--link); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
   .chip {
     display: inline-block; vertical-align: 2px;
@@ -147,8 +156,13 @@
     margin-top: 40px; text-align: center;
     font: 400 13px/1.6 "Sofia Sans", sans-serif; color: var(--faint);
   }
-  .note a { color: var(--flame); text-decoration: none; font-weight: 700; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+  .note a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; font-weight: 700; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  /* WCAG 2.4.5: the same small page nav on every Connect support page */
+  .pagenav ul { list-style: none; margin: 0 0 26px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font: 600 13px/1.5 "Sofia Sans", system-ui, -apple-system, sans-serif; }
+  .pagenav a { color: var(--navlink); text-decoration: none; }
+  .pagenav a:hover { text-decoration: underline; }
+  .pagenav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -159,6 +173,16 @@
      "Quién puede verme", "Retrato", "caminos", "el camino por delante". The web app and the staff-access
      email are English-only today, so their words stay in English. Change both pages together. -->
 <div class="wrap">
+  <nav class="pagenav" aria-label="Páginas de Foundry Connect">
+  <ul>
+    <li><a href="/">Foundry Connect</a></li>
+    <li><a href="/support" hreflang="en">Soporte</a></li>
+    <li><a href="/whatsnew/es/" aria-current="page">Novedades</a></li>
+    <li><a href="/redeem/es/">Códigos escolares</a></li>
+    <li><a href="/delete-account" hreflang="en">Borrar una cuenta</a></li>
+    <li><a href="/Foundry%20Index%20Methodology.html?lang=es">Cómo clasificamos</a></li>
+  </ul>
+  </nav>
   <header>
     <div class="brandline">
       <svg class="flame" viewBox="0 0 22 28" aria-hidden="true">
@@ -192,13 +216,13 @@
 
   <div class="item">
     <h2>Madre, padre o tutor <span class="chip">Nuevo</span></h2>
-    <p>El rol que decía <b>Madre o padre</b> ahora dice <b>Madre, padre o tutor</b> (<i>Parent or guardian</i> en inglés), porque muchas veces quien estudia no vive con su madre o su padre. Connect muestra a cada persona con el rol que eligió tu estudiante.</p>
+    <p>El rol que decía <b>Madre o padre</b> ahora dice <b>Madre, padre o tutor</b> (<i lang="en">Parent or guardian</i> en inglés), porque muchas veces quien estudia no vive con su madre o su padre. Connect muestra a cada persona con el rol que eligió tu estudiante.</p>
   </div>
 
   <div class="item">
     <h2>El Foundry Index, a través de los caminos de tu estudiante <span class="chip">Nuevo</span></h2>
     <p>Con tu sesión iniciada, ves las listas del <b>Foundry Index</b> que corresponden a los caminos que tu estudiante comparte contigo: escuelas y programas clasificados para las carreras que está considerando. Si deja de compartir sus caminos, esas listas también dejan de verse.</p>
-    <p class="why"><b>Personal de la escuela:</b> si tu escuela te dio un acceso de personal (<i>staff seat</i>), te llega un correo en inglés con el asunto "[nombre de tu escuela] gave you Foundry Connect access". Inicia sesión con esa misma dirección y ves el Foundry Index completo: todas las listas, no solo las de los caminos de tu estudiante.</p>
+    <p class="why"><b>Personal de la escuela:</b> si tu escuela te dio un acceso de personal (<i lang="en">staff seat</i>), te llega un correo en inglés con el asunto "[nombre de tu escuela] <span lang="en">gave you Foundry Connect access</span>". Inicia sesión con esa misma dirección y ves el Foundry Index completo: todas las listas, no solo las de los caminos de tu estudiante.</p>
   </div>
 
   <div class="item">
@@ -214,7 +238,7 @@
 
   <div class="item">
     <h2>¿Primera vez en Connect?</h2>
-    <p class="why"><b>Para entrar:</b> pide a tu estudiante que te agregue con tu correo en <b>Quién puede verme</b> (en la web: <i>Who can see me</i>). Luego inicia sesión en <b>foundryconnect.me</b> con esa misma dirección. Te enviamos un código de 8 dígitos por correo y ves a cada estudiante que compartió contigo. Connect está en español: elige <b>Español</b> al entrar, o cámbialo cuando quieras desde el menú.</p>
+    <p class="why"><b>Para entrar:</b> pide a tu estudiante que te agregue con tu correo en <b>Quién puede verme</b> (en la web: <i lang="en">Who can see me</i>). Luego inicia sesión en <b>foundryconnect.me</b> con esa misma dirección. Te enviamos un código de 8 dígitos por correo y ves a cada estudiante que compartió contigo. Connect está en español: elige <b>Español</b> al entrar, o cámbialo cuando quieras desde el menú.</p>
   </div>
   </section>
 
